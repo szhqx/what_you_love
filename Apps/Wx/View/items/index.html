@@ -1,0 +1,203 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>商品列表</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/activity.css"/>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/common.js"></script></head>
+<style type="text/css">
+.clearfix:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.clearfix{zoom:1} 
+.float-r{ float: right !important;}
+.float-l{ float: left !important;}
+ul{list-style: none; }
+b,i{ font-weight:normal;}
+.cont_px{width: 100%;}
+.cont_px ul{ border-bottom: 1px solid #f2f2f2; overflow: hidden; padding: 5px 0px; background: #fff;}
+.cont_px ul li{width: 33.333333%; float: left; text-align: center; line-height: 25px;}
+.cont_px ul .li_cur{color: #dc2222;}
+
+.cont_brand{background:#eeeeee; padding-bottom: 8px; overflow: hidden;}
+.cont_brand ul li{ margin: 8px 0px 0px 1.8%; width: 22%; float: left; text-align: center; line-height: 30px;border: 1px solid #e2e2e2; background: #fff; border-radius: 3px;}
+
+.cont_list{ overflow: hidden; width: 100%; background: #fff;}
+.list_left{overflow: hidden; width: 120px; height: 120px;}
+.list_right{width: 60%; padding:5px 0px 0px 0px;height: 120px;line-height: 20px;margin-left: 8px;}
+.list_tit{ font-size:14px ; color: #051b29; height: 40px; overflow: hidden; padding-right: 5px;}
+.list_xs{color: #a0a0a0; margin: 15px 0px; }
+.list_xs b{ margin: 0px 3px;}
+.list_xs span{ margin-right:10px;}
+.list_price{ color: #dd2626;}
+.list_price span{ font-size:16px; margin-left: 3px;margin-right:10px;}
+.list_price b{ color: #9d9d9d;}
+.list_line{ width: 500%; height: 1px; border-bottom: 1px solid #ebebeb; margin-top: 6px;}
+
+
+.column{width: 49%;margin-right: 1%; float: left; }
+.column_none{margin-left: 0px;}
+.column_brand{background:#eeeeee; padding-bottom: 8px; overflow: hidden;}
+.column_brand ul li{ margin: 8px 0px 0px 5%; width: 40%; float: left; text-align: center; line-height: 30px;border: 1px solid #e2e2e2; background: #fff; border-radius: 3px;}
+.column_list{ overflow: hidden; width: 100%;margin-top: 2px;}
+.column_left{overflow: hidden;}
+.column_right{width: 100%; padding:5px 0px 3px 0px;line-height: 20px;overflow: hidden; background: #fff;border-bottom: 1px solid #ebebeb;}
+.column_tit{ font-size:14px ; color: #051b29; height: 20px; overflow: hidden; padding: 0px 5px;}
+.column_price{  padding: 0px 5px;overflow: hidden; margin: 10px 0px 8px 0px;}
+.column_price span{  margin-left: 3px;margin-right:10px;color: #dd2626;}
+.column_price span b{ font-size:16px;}
+.column_price i{ color: #9d9d9d;}
+.column_price b{ margin: 0px 5px;}
+</style>
+
+
+<body style="background:#eeeeee; font-size: 12px; 	">
+
+	<php>$title_name = "商品列表";</php>
+
+	<header>
+		<div class="tab_nav">
+			<div class="header">
+				<div class="h-left">
+						<a href="{:U('items/catalog')}" class="top_bt"></a>
+				</div>
+				<div class="h-mid">{$title_name}</div>
+				<div class="h-right">
+					<aside class="top_bar">
+						<div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</header>
+	<include file="public:menu"/>
+		<!--
+        	描述：排序
+        -->
+        <div class="cont_px">
+        	<ul>
+				<a href="/index.php?m=items&a=index&by=zh&sort={$sort}&keywords={$ky}"><li <php>if($_GET['by']!='xl'&&$_GET['by']!='jg') echo 'class="li_cur"';</php>>综合</li></a>
+        		<a href="/index.php?m=items&a=index&by=xl&sort={$sort}&keywords={$ky}"> <li  <php>if($_GET['by']=='xl') echo 'class="li_cur"';</php>>销量</li></a>
+				<a href="/index.php?m=items&a=index&by=jg&sort={$sort}&keywords={$ky}"> <li  <php>if($_GET['by']=='jg') echo 'class="li_cur"';</php>>价格</li></a>
+        		<!--<li>店铺</li>-->
+        		<!--<li style="border-left: 1px solid #f2f2f2;">列表/两列</li>-->
+        	</ul>
+        </div>
+   
+
+		<!--
+        	描述：一列排版
+        -->
+        
+        <div style="display: block;">
+
+			<!--
+	        	描述：品牌
+	        -->
+			<div class="cont_brand" style="display: none;">
+	        	<ul>
+					<foreach name="cate_data" item="vo" key="m">
+						<if condition="$vo['pid'] eq 0">
+	        		        <li <if condition='$m eq 1'>class='li_cur' </if> >{$vo.name}</li>
+						</if>
+					</foreach>
+
+	        	</ul>
+	        </div>
+			<!--
+	        	描述：商品列表
+	        -->
+			<notempty name="items">
+			<div  id="container" class="container">
+			<volist name="items" id="vo">
+				<a href="{:U('items/detail',array('id'=>$vo['id']))}" title="{$vo.title}">
+			<div class="cont_list" style="display: block;">
+	        	<div class="list_left float-l">
+	        		<img src="__ROOT__/data/upload/items/{$vo.picture|get_thumb_img=###,'_b'}" width="120" height="120" />
+	        	</div>
+	        	<div class="list_right float-l">
+	        		<div class="list_tit">{$vo.title}</div>
+	        		<div class="list_xs">
+	        			<span>销<b>{$vo.success_num|default="0"}</b>件</span>
+	        			<span>{$vo.business}</span>
+	        		</div>
+	        		<div class="list_price">&#165;<span><if condition="$vo.rel_price neq ''">{$vo.rel_price}<else/>{$vo.discount}</if></span><b></b></div>
+	        		<div class="list_line"></div>
+	        	</div>
+	        </div>
+					</a>
+			</volist>
+
+			</div>
+			<div id="loading" class="loading-wrap" style="text-align: center;">
+				<span class="loading" >加载中，请稍后...</span>
+			</div>
+				<else />
+			<div style="text-align: center;color: #004444;padding-bottom: 90%;font-size: 30px;padding-top: 20%;"><span >暂无此分类商品</span></div>
+			</notempty>
+			<!--加载中-->
+        </div>
+	<include file="public:footer" />
+	<script type="text/javascript">
+		var p=0;
+		var b=0;
+		$(function(){
+			//页面初始化时执行瀑布流
+			//用户拖动滚动条，达到底部时ajax加载一次数据
+			var loading = $("#loading").data("on", false);//通过给loading这个div增加属性on，来判断执行一次ajax请求
+			$(window).scroll(function(){
+				p++;
+				if(loading.data("on")) return;
+				if($(document).scrollTop() > $(document).height()-$(window).height()-$('.footer').height()){ //页面拖到底部了
+					//加载更多数据
+					loading.data("on", true).fadeIn();         //在这里将on设为true来阻止继续的ajax请求
+
+					$.get("{:U('items/getMore')}&keywords={$ky}&by="+'{$by}'+"&sort="+'{$sort}'+"&page="+p,
+							function(data){
+								var html = '';
+								if($.isArray(data)){
+									for(i in data){
+										html += '<div class="cont_list" style="display: block;">';
+										html += '<div class="list_left float-l">';
+										html += '<img src="__ROOT__/data/upload/items/'+data[i].picture+'" width="120" height="120" />';
+										html += '</div>';
+										html += '<div class="list_right float-l">';
+										html += '<div class="list_tit">'+data[i].title+'</div>';
+										html += '<div class="list_xs">';
+										html += '<span>销<b>'+data[i].success_num+'</b>件</span>';
+										html += '<span>'+data[i].business+'</span>';
+										html += '</div>';
+										if(data[i].rel_price){
+											html += '<div class="list_price">&#165;<span>'+data[i].rel_price+'</if></span><b></b></div>';
+										}else{
+											html += '<div class="list_price">&#165;<span>'+data[i].discount+'</if></span><b></b></div>';
+										}
+										html += '<div class="list_line"></div>';
+										html += '</div>';
+										html += '</div>';
+										if(i==3){
+											 b=1;
+										}
+									}
+
+									$("#container").append(html);
+									//一次请求完成，将on设为false，可以进行下一次的请求
+									if(b==1){
+										$("#loading").data("on", false);
+									}
+
+								}
+								loading.fadeOut();
+							},
+							"json");
+				}
+			});
+		});
+
+	</script>
+</body>
+</html>

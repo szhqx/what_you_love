@@ -1,0 +1,91 @@
+@charset "utf-8";
+/*
+个人中心
+*/
+
+/*个人中心头部*/
+.usertop{height: 200px; position: relative; overflow: hidden;}
+.usertop .bigface{position: absolute; width: 100%; height: 200px; left: 0; top: 0; overflow: hidden; z-index: 400; -webkit-filter: blur(2px); -moz-filter: blur(2px); -ms-filter: blur(2px); filter: blur(2px); -webkit-transform: scale(1.05,1.05); background-size: cover; background-position: center;}
+.usertop .usertit{position: relative; z-index: 500; padding-top: 40px; text-align: center; color: #fff;}
+.usertop .usertit .smallface{width: 100px; height: 100px; overflow: hidden; border-radius: 100%; background-size: cover; background-position: center; margin: 0 auto;}
+.usertop .usertit .username{padding: 5px 0;}
+.usertop .usertit .usersex{margin-left: 10px; font-size: 12px;}
+.usertop .usertit .fa-mars-stroke{background: #49acd5; border-radius: 100%; padding: 4px;}
+.usertop .usertit .fa-mercury{background: #f00; border-radius: 100%; padding: 4px 6px;}
+.usertop .usertit .usersign{font-size: 12px;}
+.usertop .viprank{background: #ef2b2d; color: #fff;text-align: center; border-bottom-right-radius: 10px; border-top-right-radius: 10px; position: absolute; top: 20px; left: 0; z-index: 500; padding: 2px 10px;}
+.usertop .usermsg{position: absolute; top: 20px; right: 10px; z-index: 500; color: #fff;}
+.usertop .usermsg i{margin-right: 5px; font-size: 18px;}
+.usertop .usermsg .point{position: absolute; top: 0; left: 15px; background: #ef2b2d; width: 6px; height: 6px; border-radius: 100%;}
+.usertop a{color: #fff;}
+.user_account{margin: 10px 7px;}
+.user_account li{width: 33.333%; float: left;}
+.user_account a{display: block; margin: 0 3px; background: #eaad43; color: #fff; text-align: center; padding: 10px; font-size: 12px;}
+.user_account li:nth-child(2) a{background: #45bc62;}
+.user_account li:nth-child(3) a{background: #49acd5;}
+.user_account b{font-size: 16px; font-weight: 500;}
+/*个人中心导航*/
+.usernav{ background: #fff; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; padding: 0 10px;}
+.usernav li{border-bottom: 1px solid #ebebeb; line-height: 36px; position: relative; padding: 0 25px;}
+.usernav li a{display: block;}
+.usernav li span{color: #ef2b2d; font-size: 12px; margin-left: 3px;}
+.usernav li:last-child{border-bottom: 0;}
+.usernav li .fa{position: absolute; right: 0; top: 50%; -webkit-transform: translateY(-50%); font-size: 22px; color: #666;}
+.usernav .user_nav_icon1{background: url("../images/icon/user_nav1.svg") center no-repeat; background-size: auto 100%; height: 18px; width: 20px; display: block; margin: 0 auto; position: absolute; left: 0; top: 50%; -webkit-transform: translateY(-50%);}
+.usernav .user_nav_icon2{background: url("../images/icon/user_nav2.png") center no-repeat; background-size: auto 100%; height: 18px; width: 20px; display: block; margin: 0 auto; position: absolute; left: 0; top: 50%; -webkit-transform: translateY(-50%);}
+.usernav .user_nav_icon3{background: url("../images/icon/user_nav3.png") center no-repeat; background-size: auto 100%; height: 18px; width: 20px; display: block; margin: 0 auto; position: absolute; left: 0; top: 50%; -webkit-transform: translateY(-50%);}
+.usernav .user_nav_icon4{background: url("../images/icon/user_nav4.svg") center no-repeat; background-size: auto 100%; height: 18px; width: 20px; display: block; margin: 0 auto; position: absolute; left: 0; top: 50%; -webkit-transform: translateY(-50%);}
+.usernav .user_nav_icon5{background: url("../images/icon/user_nav5.svg") center no-repeat; background-size: auto 100%; height: 18px; width: 20px; display: block; margin: 0 auto; position: absolute; left: 0; top: 50%; -webkit-transform: translateY(-50%);}
+
+/*消息列表*/
+.msglist{padding-top: 10px;}
+.msglist .msgitem{background: #fff; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; padding: 5px 10px; margin-bottom: 10px; position: relative;}
+.msglist .mtit{ margin-bottom: 5px;}
+.msglist .mtit span{color: #ef2b2d;}
+.msglist .mtime{text-align: right; color: #666;}
+
+/*个人信息编辑*/
+.userinfo{ padding-bottom: 10px;}
+.userinfo .facebg{position: fixed; top: 0; z-index: 100; width: 100%; left: 0; height: 200px; overflow: hidden; background-size: cover; background-position: center;}
+.userinfo .uinfobox{position: relative; z-index: 200; padding-top: 200px;}
+.userinfo .upface{ position:absolute; width: 200px; height: 120px; background: url("../images/upface.png") center no-repeat; background-size: 100%; left: 50%; top: 120px; -webkit-transform: translateX(-50%);}
+.userinfo .uinforow{background: #fff; padding-top: 40px;}
+.uflist{ overflow-x: scroll; -webkit-overflow-scrolling: touch; padding: 5px 0;}
+.ufacelist{text-align: center; overflow: hidden;}
+.ufacelist .face{display: inline-block; width: 80px; height: 80px; margin: 0 5px; background-size: cover; background-position: center; border-radius: 100%; overflow: hidden;}
+.ufacelist .face img{width: 100px; height: 80px;}
+.uform{padding: 0 10px 10px;}
+.uform td{vertical-align: middle; height: 40px; color: #666;}
+.uform .fomtit{text-align: right; width: 70px; line-height: 37px; color: #000;}
+.ncheck{max-height: 280px; overflow: scroll; -webkit-overflow-scrolling: touch; padding: 0;}
+.ncheck span{line-height: 28px; padding: 0 10px;}
+.submitbtn{font-size: 16px; text-align: center; color: #fff; line-height: 42px; background: #ef2b2d; margin: 0 auto;}
+.submitbtn a{display: block; color: #fff;}
+.submitbtn input{color: #fff; background: none; border: 0; font-size: 16px;}
+
+/*优惠券*/
+.tklist{padding: 10px 10px 0;}
+.tklist .tkitem  .c1{background-color: #ef2b2d;}
+.tklist .tkitem  .c2{background-color: #e60012;}
+.tklist .tkitem  .c3{background-color: #999;}
+.tklist .tkitem{ background: #f5f5f5; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; margin-bottom: 10px;}
+.tklist .tkitem .fl,.tklist .tkitem .fr{max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.tklist .tkitem .tit{ color: #fff; padding: 15px 10px; font-size: 20px; background-image: url("../images/linebg.png"); background-position:  bottom center; background-repeat:  repeat-x;}
+.tklist .tkitem .txt{ padding: 10px; color: #666;}
+.tklist .tkitem .tkicon{width: 48px; height: 48px; border: 2px solid #fff; border-radius: 100%; line-height: 50px; text-align: center; font-size: 28px;}
+.tklist .tkitem .tkname{line-height: 52px;}
+
+/*密码*/
+.pform{padding-top: 10px;}
+.pform .form_item{background: #fff; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; margin-bottom: 10px;}
+.pform .ftit{padding: 10px; font-size: 16px;}
+.pform .getcode{position: absolute; right: 0; color: #fff; background: #ef2b2d; padding: 0 5px;}
+
+/*钱包*/
+.purse_tit{background: #ef2b2d; color: #fff; text-align: center; padding: 30px 0;}
+.purse_tit b{font-size: 60px; font-weight: 500; padding: 0 5px;}
+.purse_tit span{-webkit-transform: translateY(-26px); display: inline-block; font-size: 22px;}
+.purse_form{margin-top: 10px; background: #fff; border-top: 1px solid #ddd; padding: 0 10px 5px;}
+.purse_form .tit{line-height: 28px; padding-top: 5px;}
+.purse_form .txtinput{border: 1px solid #ebebeb; margin: 5px;}
+.purse_txt{text-align: center; color: #ef2b2d; padding: 5px;}

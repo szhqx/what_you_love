@@ -1,0 +1,193 @@
+
+<!DOCTYPE html >
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>爱乐享活动详细页</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/activity.css"/>    
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/common.js"></script>
+    <style>
+        /*消息列表*/
+        .msglist{padding-top: 10px;}
+        .msglist .msgitem{background: #fff; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; padding: 0px 10px; margin-bottom: 5px; position: relative;}
+        .msglist .mtit{ margin-bottom: 2px;font-size: 14px }
+        .msglist .mtit span{color: #ef2b2d;}
+        .msglist .mtime{font-size: 12px;text-align: right;padding-right: 2px; color: #666;}
+        .h_right>ul>li{
+            white-space:normal;
+        }
+    </style>
+
+</head>
+<body style="background:#f4f2f3">
+
+<include file="public:header"/>
+      <include file="public:menu"/>
+
+<div style=" width:100%; height:30px;"></div>
+
+  <div class="huodong">
+ <div class="huodong_mid">
+
+  <div class="h_right">
+ 
+   <div class="img"><img src="__ROOT__/{$info.picurl|get_thumb_img=###,''}">
+   <span>{$info.start_time}~{$info.end_time}</span>
+   </div>
+   
+     <ul>
+       <li><strong>活动主题：</strong>{$info.activityTitle}</li>
+       <li><strong>活动地点：</strong>{$info.address}</li>
+       <li><strong>活动预算：</strong>{$info.expenditure}</li>
+       <li><strong>活动每人预付金额：</strong>{$info.prepay}（多还少补）</li>
+       <li><strong>活动预报名人数：</strong>{$info.user_num}</li>
+       <li><strong>活动已报人数：</strong>{$info.success_num|default='0'}</li>
+       <li><strong>活动时间：</strong>{$info.start_time}~{$info.end_time}</li>
+       <li><strong>报名结束时间：</strong>{$info.end_apply}</li>
+     </ul>
+     <dl class="fanwei">
+         <dt>活动内容：</dt>
+         <dd>
+           {$info.flow|htmlspecialchars_decode}
+         </dd>
+     </dl>
+      <volist name="info[activityPhoto]" id="vo">
+      <div class="imgs">
+          <img src="__ROOT__/{$vo}">
+      </div>
+      </volist>
+    </div>
+     <div style=" width:100%; height:30px;"><p><a style="display: block;
+    margin: auto;
+    width: 120px;
+    height: 30px;
+    margin-top: 2px;
+    margin-buttom: 8px;
+    font-size: 14px;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    <if condition="$apply eq '2'"> background: #666;"<else /> background: #F30;"</if>
+         <if condition="$apply eq '1'"> href="/wx/activity/gojoin/actid/{$info.activityId}">我要报名</if>
+         <if condition="$apply eq '2'"> >活动结束</if>
+         <if condition="$apply eq '3'"> >我已报名</if>
+         </a></p>
+     </div>
+     <div style=" width:100%; height:30px;"><p><a style="display: block;
+                                    margin: auto;
+                                    width: 120px;
+                                    height: 30px;
+                                    margin-top: 2px;
+                                    margin-buttom: 8px;
+                                    font-size: 14px;
+                                    line-height: 30px;
+                                    color: #fff;
+                                    text-align: center;
+                                    border-radius: 20px;
+                                    background: #F30;" href="/wx/activity/lookstatement/actid/{$info.activityId}">查看财务报表</a>
+
+     </p>
+         </div>
+    <if condition="$isUp neq '1' and $joinuser eq '1'"> <div style=" width:100%; height:30px;">
+         <p><a style="display: block;
+                                    margin: auto;
+                                    width: 120px;
+                                    height: 30px;
+                                    margin-top: 2px;
+                                    margin-buttom: 8px;
+                                    font-size: 14px;
+                                    line-height: 30px;
+                                    color: #fff;
+                                    text-align: center;
+                                    border-radius: 20px;
+                                    background: #F30;" href="/wx/activity/upstatement/actid/{$info.activityId}">上传财务数据</a></p>
+     </div>
+    </if>
+     <div class="msglist">
+         <volist name="joindata" id="vo">
+         <div class="msgitem">
+             <div class="mtit">{$vo.username}<span><if condition="$joinuser eq '1'">Tel:{$vo.mobile}</if></span> <var style="float: right;padding-right: 5px;">{$vo.createTime}</var> </div>
+             <div class="mtime" hidden></div>
+         </div>
+         </volist>
+     </div>
+  </div>
+  </div>
+   <div class="clear"></div>
+
+
+
+<include file="public:footer"/>
+<link rel="stylesheet" href="__ROOT__/Public/plugins/layer/skin/layerwx.css">
+<script src="__WX__bx/js/msgalert.js"></script>
+<script src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script>
+    $(document).ready(function(){
+        //加速点击
+        FastClick.attach(document.body);
+    })
+</script>
+<!--微信分享-->
+    <if condition="$signPackage neq ''">
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script>
+            wx.config({
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp:'<?php echo $signPackage["timestamp"];?>',
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            });
+            wx.ready(function (){
+                var word = window.location.href;
+                var bbb = word.split(".htm");
+                var url =  bbb[0]+"/pid/{$WST_USER['userId']}";
+                if("{$info.picurl|get_thumb_img=###,''}" ==''){  //{$info.picurl|get_thumb_img=###,''}
+                    var imgurl = 'http://xihuansha.greenfoodweb.com/Upload/goods/2016-04/570f7318257e3.jpg';
+                }else{
+                    var imgurl = 'http://xihuansha.greenfoodweb.com/__ROOT__/{$info.picurl|get_thumb_img=###,''}';
+                }
+                if("{$info.activityTitle}" ==''){
+                    var title = '嘻欢啥分享标题';
+                }else{
+                    var title = '{$info.activityTitle}';
+                }
+
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    desc: title, // 分享描述
+                    link: url, // 分享链接
+                    imgUrl:imgurl, // 分享图标
+                    success: function () {
+                    },
+                    cancel: function () {
+                    }
+                });
+                //获取“分享给朋友”按钮点击状态及自定义分享内容接口
+                wx.onMenuShareAppMessage({
+                    title: title, // 分享标题
+                    desc: title, // 分享描述
+                    link: url, // 分享链接
+                    imgUrl:imgurl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                    },
+                    cancel: function () {
+                    }
+                });
+            });
+
+        </script>
+    </if>
+    </body>
+</html>

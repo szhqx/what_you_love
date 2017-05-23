@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <!-- 禁止数字识自动别为电话号码 -->
+    <meta name="format-detection" content="telephone=no"/>
+    <title>我发布的</title>
+    <link rel="stylesheet" href="__WX__bx/css/yj-base.css"/>
+    <link rel="stylesheet" href="__WX__bx/css/collection.css"/>
+</head>
+<body>
+<div class="yj-header">
+    <a class="yj-icon yj-icon-left yj-left" href='javascript:;' onClick="javascript :history.go(-1);"></a>
+
+    <h1 class="yj-title">我发布的</h1>
+</div>
+<div class="yj-full-body">
+    <div class="yj-media yj-full-media">
+        <notempty name="activity">
+        <volist name="activity" id="vo">
+            <a href="/wx/activity/show/id/{$vo.activityId}">
+            <div class="yj-media-list">
+                <div class="yj-media-img yj-pull-left">
+                   <img src="__ROOT__/{$vo.picurl}"/>
+                </div>
+                <div class="yj-media-body yj-pull-right">
+                    <h4 class="yj-media-title">{$vo.activityTitle}</h4>
+                    <p class="yj-media-content">{$vo.desc}</p>
+                    <p class="yj-media-cash"><i>{$vo.createTime}</i></p>
+                    <button type="button" style="    height: 1.5em;width:4em; color: #fff;">{$vo.isOff}</button>
+                </div>
+            </div></a>
+        </volist>
+        <else/>
+        <div class="yj-media-list" >
+            暂无发布过活动...
+        </div>
+        </notempty>
+    </div>
+</div>
+<script src="__WX__js/jquery.js"></script>
+<script src="__WX__bx/js/hammer.min.js"></script>
+<script src="__WX__bx/js/jquery.hammer.js"></script>
+<script>
+    $(function () {
+        $(".yj-full-body").height($(window).height() - $(".yj-header").height());
+        $("button").on("click",function(){
+            //$(".yj-full-body").prepend("<div class=alert>活动已结束</div>");
+            //$(".alert").delay(800).fadeOut(300);
+        })
+//        $(".yj-media-body").each(function () {
+//            $(this).find("button").hammer().on("tap", function () {
+////                if ($(".alert").is(":hidden"))
+////                    $(".alert").remove()
+////                $(this).parents(".yj-media-list").remove();
+//                $(".yj-full-body").prepend("<div class=alert>已取消收藏</div>");
+//                $(".alert").delay(800).fadeOut(300);
+//            })
+//        })
+    })
+</script>
+</body>
+</html>

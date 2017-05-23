@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <!-- 禁止数字识自动别为电话号码 -->
+    <meta name="format-detection" content="telephone=no"/>
+    <title>发布活动</title>
+    <link rel="stylesheet" href="__WX__bx/css/yj-base.css"/>
+    <link rel="stylesheet" href="__WX__bx/css/feedback.css"/>
+    <script src="__WX__js/jquery.js"></script>
+    <style>
+        .yj-full-body input,select{
+            width: 90%;
+            padding: 0 3%;
+            height: 36px;
+            margin-right: 5%;
+            margin-bottom: 3%;
+            background: transparent;
+            border: none;
+            vertical-align: middle;
+            margin-top: -2px;
+            -webkit-appearance: none;
+            color: #666;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+        }
+        #calhead select{color:black;}
+        .uc_form_txt{
+            margin-left: 5%;
+        }
+        .uc_form_txt .imglist li{ margin-right: 10px; float: left;}
+        .uc_form_txt .imglist img{height: 60px;}
+        .uc_form_txt .imglist .addimg{width: 60px; border: 1px solid #eee; text-align: center; font-size: 12px; color: #aaa; line-height: 18px; cursor: pointer;}
+        .uc_form_txt .imglist .addimg .fa{font-size: 18px; color: #ccc;}
+        .uc_form_txt .imglist .upimg{display: block; position: relative; text-decoration: none; color: #ccc; padding: 11px 0; margin: 0;}
+        .uc_form_txt .imglist .upimg input { position: absolute; top: 0; left: 0; width: 60px; height: 60px; opacity: 0; filter: alpha(opacity: 0);}
+        .uc_form_txt span{display: inline-block;}
+    </style>
+</head>
+<body>
+<script>
+    var GV = {
+        DIMAUB: "__ROOT__/",
+        JS_ROOT: "Public/js/",
+        TOKEN: ""
+    };
+</script>
+<script  type="text/javascript"  src="__PUBLIC__/js/wind.js"></script>
+<script  type="text/javascript"  src="__PUBLIC__/js/datePicker/datePicker.js"></script>
+<div class="yj-header">
+    <a class="yj-icon yj-icon-left yj-left" href='javascript:;' onClick="javascript :history.go(-1);"></a>
+    <h1 class="yj-title">发布活动</h1>
+</div>
+<div class="yj-full-body" style="overflow: scroll;position:relative;  -webkit-overflow-scrolling: touch;">
+    <form action="/wx/users/release_activity" method="post"  enctype="multipart/form-data">
+        <input name="activityTitle" type="text" placeholder="活动标题" />
+        <select name="catId" >
+            <volist name="actCate" id="vo">
+                <option value="{$vo.catId}">{$vo.catName}</option>
+            </volist>
+        </select>
+        <select name="isshow" >
+            <option value="1" selected="selected">公开</option>
+            <option value="0">不公开</option>
+        </select>
+        <div class="uc_form_txt">
+        <ul class="imglist clearfix" id="imglist">
+            <li class="addimg">
+            <a href="javascript:void(0);" class="upimg"><i class="fa fa-plus-circle"></i><br/>活动banner图
+            <input type="file" name="file_img" id="file_img" />
+            </a>
+            </li>
+            <li id="headimg">
+            <img src="/static/wx/bx/images/cartoon.png" />
+            </li>
+        </ul>
+        </div>
+        <input name="initiator" type="text" placeholder="活动联系人" />
+        <input name="mobile" type="tel"  placeholder="手机号码" />
+        <input name="address" type="text"  placeholder="活动场地地址" />
+        <input name="expenditure" type="number"  placeholder="活动预算经费" />
+        <input name="user_num" type="number"  placeholder="活动预报名人数" />
+        <input name="prepay" type="number"  placeholder="每人预付金额（多还少补）" />
+        <span style="width: 38%;float: left;line-height: 35px;">活动开始时间：</span>
+        <input type='datetime-local' id='start_time' name='start_time' class="wstipt wst-ipt " style="width: 52%;" value='{$object.end_apply|default="2016-01-01 00:00"}'/>
+        <!--js-datetime-->
+        <span style="width: 38%;float: left;line-height: 35px;">活动结束时间：</span>
+        <input type='datetime-local' id='end_time' name='end_time' class="wstipt wst-ipt " style="width: 52%;" value='{$object.end_apply|default="2016-01-01 00:00"}'/>
+        <span style="width: 38%;float: left;line-height: 35px;">报名结束时间：</span>
+        <input type='datetime-local' id='end_apply' name='end_apply' class="wstipt wst-ipt " style="width: 52%;" value='{$object.end_apply|default="2016-01-01 00:00"}'/>
+        <div style="width: 100%;">
+            <div class="uc_form_txt">
+                <ul class="imglist clearfix" id="imglist1">
+                    <li class="addimg">
+                        <a href="javascript:void(0);" class="upimg"><i class="fa fa-plus-circle"></i>活动图1
+                            <input type="file" name="file_img1[]" id="file_img1" />
+                        </a>
+                    </li>
+                    <li id="headimg1">
+                        <img src="/static/wx/bx/images/cartoon.png" />
+                    </li>
+                </ul>
+            </div>
+            <div class="uc_form_txt">
+                <ul class="imglist clearfix" id="imglist2">
+                    <li class="addimg">
+                        <a href="javascript:void(0);" class="upimg"><i class="fa fa-plus-circle"></i>活动图2
+                            <input type="file" name="file_img1[]" id="file_img2" />
+                        </a>
+                    </li>
+                    <li id="headimg2">
+                        <img src="/static/wx/bx/images/cartoon.png" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="width: 100%;">
+            <div class="uc_form_txt">
+                <ul class="imglist clearfix" id="imglist3">
+                    <li class="addimg">
+                        <a href="javascript:void(0);" class="upimg"><i class="fa fa-plus-circle"></i>活动图3
+                            <input type="file" name="file_img1[]" id="file_img3" />
+                        </a>
+                    </li>
+                    <li id="headimg3">
+                        <img src="/static/wx/bx/images/cartoon.png" />
+                    </li>
+                </ul>
+            </div>
+            <div class="uc_form_txt">
+                <ul class="imglist clearfix" id="imglist4">
+                    <li class="addimg">
+                        <a href="javascript:void(0);" class="upimg"><i class="fa fa-plus-circle"></i>活动图4
+                            <input type="file" name="file_img1[]" id="file_img4" />
+                        </a>
+                    </li>
+                    <li id="headimg4">
+                        <img src="/static/wx/bx/images/cartoon.png" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <textarea name="desc"  placeholder="活动简要描述（不得120字）" ></textarea>
+        <textarea name="flow" placeholder="活动详细说明"></textarea>
+        <button type="submit">发布</button>
+    </form>
+</div>
+
+<script src="__WX__js/ajaxfileupload.js"></script>
+<script>
+    $(function(){
+        //添加图片
+        $("#file_img").change(function(){
+            var objUrl = getObjectURL(this.files[0]);
+            if (objUrl) {
+                $("#imglist").append('<li><img src='+objUrl+'></li>');
+            }
+        }) ;
+        //建立一个可存取到改file的url
+        function getObjectURL(file){
+            var url = null;
+            if (window.createObjectURL!=undefined){ // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL!=undefined){ // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL!=undefined){ // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            $("#headimg").hide();
+            return url ;
+        }
+    });
+    $(function(){
+        //添加图片
+        $("#file_img1").change(function(){
+            var objUrl = getObjectURL(this.files[0]);
+            if (objUrl) {
+                $("#imglist1").append('<li><img src='+objUrl+'></li>');
+            }
+        }) ;
+        //建立一个可存取到改file的url
+        function getObjectURL(file){
+            var url = null;
+            if (window.createObjectURL!=undefined){ // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL!=undefined){ // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL!=undefined){ // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            $("#headimg1").hide();
+            return url ;
+        }
+    })
+    $(function(){
+        //添加图片
+        $("#file_img2").change(function(){
+            var objUrl = getObjectURL(this.files[0]);
+            if (objUrl) {
+                $("#imglist2").append('<li><img src='+objUrl+'></li>');
+            }
+        }) ;
+        //建立一个可存取到改file的url
+        function getObjectURL(file){
+            var url = null;
+            if (window.createObjectURL!=undefined){ // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL!=undefined){ // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL!=undefined){ // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            $("#headimg2").hide();
+            return url ;
+        }
+    })
+    $(function(){
+        //添加图片
+        $("#file_img3").change(function(){
+            var objUrl = getObjectURL(this.files[0]);
+            if (objUrl) {
+                $("#imglist3").append('<li><img src='+objUrl+'></li>');
+            }
+        }) ;
+        //建立一个可存取到改file的url
+        function getObjectURL(file){
+            var url = null;
+            if (window.createObjectURL!=undefined){ // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL!=undefined){ // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL!=undefined){ // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            $("#headimg3").hide();
+            return url ;
+        }
+    })
+    $(function(){
+        //添加图片
+        $("#file_img4").change(function(){
+            var objUrl = getObjectURL(this.files[0]);
+            if (objUrl) {
+                $("#imglist4").append('<li><img src='+objUrl+'></li>');
+            }
+        }) ;
+        //建立一个可存取到改file的url
+        function getObjectURL(file){
+            var url = null;
+            if (window.createObjectURL!=undefined){ // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL!=undefined){ // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL!=undefined){ // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            $("#headimg4").hide();
+            return url ;
+        }
+    })
+//    function upimg(){
+//        var filearray;
+//        var objUrl = document.getElementById("file_img").value;
+//        var fi = 0;
+//        filearray = 'file_img';
+//        $.ajaxFileUpload({
+//            url: "/wx/activity/imgadd",
+//            secureuri: false,
+//            fileElementId: filearray,
+//            dataType: 'data',
+//            success:function (data) //服务器成功响应处理函数
+//            {
+//                myform.submit();
+//            },
+//            error:function(data){
+//                // alert(data.status);
+//            }
+//        });
+//    }
+</script>
+<script>
+    $(function () {
+        $(".yj-full-body").height($(window).height() - $(".yj-header").height());
+    })
+</script>
+<script>
+    $(function(){
+        //日期选择器
+        var dateInput = $("input.js-date")
+        if (dateInput.length) {
+            Wind.use('datePicker', function () {
+                dateInput.datePicker();
+            });
+        }
+
+        //日期+时间选择器
+        var dateTimeInput = $("input.js-datetime");
+        if (dateTimeInput.length) {
+            Wind.use('datePicker', function () {
+                dateTimeInput.datePicker({
+                    time: true
+                });
+            });
+        }
+    })
+</script>
+</body>
+</html>

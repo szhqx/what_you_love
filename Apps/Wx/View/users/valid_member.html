@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,maximum-scale=1.0,initial-scale=1.0,user-scalable=0">
+<meta name="format-detection" content="telephone=no">
+<title>有效会员总数</title>
+    <link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/user.css"/>
+    <link rel="stylesheet" href="__WX__iconfont/iconfont.css">
+<link type="text/css" href="__WX__bx/css/common.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/css/user.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/lib/animate-css/animate.min.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/lib/font-awesome/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<!--loading start-->
+<div class="cover" id="loading">
+    <div class="loading">
+        <div class="dot white"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+</div>
+<!--loading end-->
+<!--主页start-->
+<div class="pager">
+    <div class="bxcont">
+        <div class="purse">
+        <div class="purse_tit"><span>人数</span><b>{$counts|default='0'}</b></div>
+            </div>
+            <div class="msglist">
+                    <div class="msgitem">
+                        <div class="mtit">简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明
+                            简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明
+                            简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明
+                            简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明
+                            简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明放置位置简单说明
+                            放置位置简单说明放置位置简单说明放置位置简单说明放置位置<span></span></div>
+                        <!--<span hidden>【未读】</span>-->
+                        <div class="mtime">2016-05-01</div>
+                    </div>
+            </div>
+        <!--消息记录为空时显示-->
+
+    </div>
+</div>
+<!--主页end-->
+<script src="__WX__bx/lib/jquery/jquery.min.js"></script>
+<!--底部导航start-->
+<div id="wrapper">
+    <div id="viewport">
+        <include file="public:footer"/>
+    </div>
+</div>
+<include file="public:wechat"/>
+<!--底部导航end-->
+
+<script src="__WX__bx/js/msgalert.js"></script>
+<script>
+    $(function(){
+        //关闭loading层
+        $("#loading").hide();
+    });
+</script>
+</body>
+</html>

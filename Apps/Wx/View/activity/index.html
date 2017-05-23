@@ -1,0 +1,89 @@
+
+<!DOCTYPE html >
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>爱乐享活动列表页</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+<!--<link href="themesmobile/68ecshopcom_mobile/style.css" rel="stylesheet" type="text/css" />-->
+
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/activity.css"/>    
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+
+
+<script type="text/javascript" src="__WX__js/common.js"></script></head>
+<body style="background:#f4f2f3">
+<!--loading start-->
+<div class="cover" id="loading" data-page="0">
+    <div class="loading">
+        <div class="dot white"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+</div>
+<!--loading end-->
+<include file="public:header" />
+<include file="public:menu"/>
+<div style=" width:100%; height:30px;"></div>
+     
+     <volist name="activity['root']" id="vo">
+      <div class="huodong">
+          <a href="{:U('activity/show',array('id'=>$vo['activityId']),'')}"><div class="huodong_mid">
+              <div class="h_right">
+               <div class="img"><img src="__ROOT__/{$vo.picurl}">
+               <span><strong>活动主题：</strong>{$vo.activityTitle}</span>
+               </div>
+                </div>
+              </div>
+          </a>
+      </div>
+     </volist>
+
+     <include file="public:footer"/>
+
+<include file="public:wechat"/>
+<script>
+    $(function(){
+        //关闭loading层
+        $("#loading").hide();
+    });
+</script>
+<script type="text/javascript">
+    //console.log(111);
+    var p=2;
+    $(function(){
+        //页面初始化时执行瀑布流
+        //用户拖动滚动条，达到底部时ajax加载一次数据
+        var loading = $("#loading").data("page", 0);//通过给loading这个div增加属性on，来判断执行一次ajax请求
+        $(window).scroll(function(){
+            //console.log($("#loading").data("page"));
+            if($("#loading").data("page")==1){
+                return false;
+            }
+            if($(document).scrollTop() > $(document).height()-$(window).height()-$('footer').height()){ //页面拖到底部了
+                //加载更多数据
+                var ll = layer.msg('数据加载中，请稍候...', {icon: 16,shade: [0.5, '#B3B3B3']});
+                loading.data("page",1);         //在这里将on设为true来阻止继续的ajax请求///Wx/goods/getMore/keyWords/{$keyWords}/msort/{$msort}/mark/{$mark}/pcurr/"+p
+                jQuery.post("/Wx/Activity/index",{p:p} ,function(data){
+                    layer.close(ll);
+                    p++;
+                    if(data.status){
+                        $(".bxcont .msglist").append(data.message);
+                        $("#loading").data("page",0);
+                    }else{
+                        $("#loading").data("page",1);
+                    }
+
+                },"json");
+            }
+
+        });
+    });
+    //
+</script>
+    </body>
+</html>

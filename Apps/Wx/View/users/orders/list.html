@@ -1,0 +1,156 @@
+
+<!DOCTYPE html >
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>用户中心_订单</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css">
+<link rel="stylesheet" type="text/css" href="__WX__css/user.css">
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+    <script type="text/javascript" src="__WX__js/common.js"></script>
+    <script type="text/javascript" src="__WX__js/order.js"></script>
+</head>
+<style>
+     ul{list-style: none; }
+     b,i{ font-weight:normal;}
+    .cont_px{width: 100%;}
+    .cont_px ul{ border-bottom: 1px solid #f2f2f2; overflow: hidden; padding: 5px 0px; background: #fff;}
+    .cont_px ul li{width: 20%; float: left; text-align: center; line-height: 25px;font-size: 14px;}
+    .cont_px ul .li_cur{color: #dc2222;}
+</style>
+<body style="background: rgb(235, 236, 237);">
+
+      <header>
+      <div class="tab_nav">
+        <div class="header">
+          <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+          <div class="h-mid">我的订单</div>
+          <div class="h-right">
+            <aside class="top_bar">
+              <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+      </header>
+      <include file="public:menu"/>
+      <div class="cont_px">
+          <ul>
+              <a href="{:U('Orders/queryPayByPage')}"> <li <if condition="$umark eq 'queryPayByPage'">class="li_cur"</if> >待付款</li></a>
+              <a href="{:U('Orders/queryDeliveryByPage')}"> <li <if condition="$umark eq 'queryDeliveryByPage'">class="li_cur"</if>>待发货</li></a>
+              <a href="{:U('Orders/queryReceiveByPage')}"> <li <if condition="$umark eq 'queryReceiveByPage'">class="li_cur"</if>>待收货</li></a>
+              <a href="{:U('Orders/queryAppraiseByPage')}"> <li <if condition="$umark eq 'queryAppraiseByPage'">class="li_cur"</if>>待评价</li></a>
+              <a href="{:U('Orders/queryCancelOrders')}"> <li <if condition="$umark eq 'queryCancelOrders'">class="li_cur"</if>>退款</li></a>
+          </ul>
+      </div>
+      <div id="wrapper">
+          <div id="viewport">
+              <div class="order_list">
+                  <volist name="orderList['root']" id="order" key='key1'>
+                      <div id="OrderList" class="ord_list">
+                          <h3>订单流水号：{$order[0]["orderunique"]}<span style="float: right; padding-right: 10%;"><var style="color: #999;"> 状态：</var><if condition='$order[0]["orderStatus"] eq -3'>拒收
+                              <elseif condition='$order[0]["orderStatus"] eq -2'/>未付款
+                              <elseif condition='$order[0]["orderStatus"] eq -1'/>已取消
+                              <elseif condition='$order[0]["orderStatus"] eq 0'/>未受理
+                              <elseif condition='$order[0]["orderStatus"] eq 1'/>已受理
+                              <elseif condition='$order[0]["orderStatus"] eq 2'/>打包中
+                              <elseif condition='$order[0]["orderStatus"] eq 3'/>配送中
+                              <elseif condition='$order[0]["orderStatus"] eq 4'/>已到货
+                              <elseif condition='$order[0]["orderStatus"] eq 5'/>确认收货
+                          </if></span></h3>
+                          <volist name="order" id="ods">
+                              <volist name="ods['goodslist']" id="goods" key='key2'>
+                                  <dl class="dingdan">
+                                      <dt><a href="{:U('Wx/Goods/getGoodsDetails/',array('goodsId'=>$goods['goodsId']))}"><img src="__ROOT__/{$goods['goodsThums']}" onerror="javascript:this.src='/Upload/mall/2016-04/570880247854a.gif'"></a></dt>
+                                      <dd>
+                                          <p>&nbsp;{$goods['goodsName']}</p>
+                                          <p>
+                                              <span>&nbsp;{$goods['goodsAttrsName']}</span>&nbsp;&nbsp;
+                                          </p>
+                                          <span>&nbsp;{$goods['goodsPrice']}&nbsp;x&nbsp;{$goods['goodsNums']}</span>
+                                      </dd>
+                                  </dl>
+                              </volist>
+                          </volist>
+                          <ul>
+                              <li>总价<strong>：￥
+                                  <?php
+                                  $countMoney = 0;
+                                  foreach($order as $key=>$val){
+                                        $countMoney +=$val['totalMoney'];
+                                        }
+                                           $deliverMoney=0;
+                                        if($val['totalMoney']>0){
+                                            $deliverMoney += $val['deliverMoney'];
+                                        }
+                                        echo $countMoney;
+                                      ?>元</strong> </li>
+                              <li>
+                                  <if condition='$order[0]["orderStatus"] eq -3'>
+                                      <a href="javascript:;">已取消</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq -2'/>
+                                      <a href="javascript:;" onclick="toPay({$order[0]['orderunique']},-2)">去支付</a>
+                                      <a href="javascript:;" onclick="showOrder({$order[0]["orderId"]})">&nbsp;查&nbsp;&nbsp;看&nbsp;</a>
+                                      <a href="javascript:;" onclick="orderCancel({$order[0]['orderunique']},-2)">取消订单</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq -1'/>
+                                      <a href="javascript:;">已取消</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq 0'/>
+                                      <a href="javascript:;" onclick="orderCancel({$order['orderId']},{$order["orderStatus"]})">取消订单</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq 1'/>
+                                      <a href="javascript:;" onclick="orderCancel({$order['orderId']},{$order["orderStatus"]})">取消订单</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq 2'/>
+                                      <a href="javascript:;" onclick="orderCancel({$order['orderId']},{$order["orderStatus"]})">取消订单</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq 3'/>
+                                      <a href="javascript:;" onclick="orderCancel({$order['orderId']},{$order["orderStatus"]})">取消订单</a>
+                                      <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+
+                                      <elseif condition='$order[0]["orderStatus"] eq 4'/>
+                                          <a href="javascript:;" onclick="orderConfirm({$order['orderId']},1)">确认收货</a>
+                                          <a href="javascript:;" onclick="orderConfirm({$order['orderId']},-1)">拒收</a>
+                                          <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                      <elseif condition='$order[0]["orderStatus"] eq 5'/>
+                                          <if condition="$order['isAppraises'] eq 1">
+                                              <a  href="javascript:;" >已评价</a>
+                                              <else/>
+                                              <a  href="javascript:;" onclick="appraiseOrder({$order['orderId']})">评价</a>
+                                          </if>
+                                          <a href="javascript:;" onclick="showOrder('{$order["orderId"]}')">查看</a>
+                                  </if>
+
+
+                              </li>
+                          </ul>
+                      </div>
+                  </volist>
+
+                  <div style="background:#FFF;">
+                      <section class="list-pagination">
+                          <div style="" class="pagenav-wrapper" id="J_PageNavWrap">
+                              <div class="pagenav-content">
+                                  <div class="pagenav" id="J_PageNav">
+                                      {$order_show}
+                                  </div>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+
+              <include file="public:footer"/>
+
+          </div>
+      </div>
+      <include file="public:wechat"/>
+
+</body>
+</html>

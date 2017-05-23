@@ -1,0 +1,63 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>商品分类</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/catalog.css"/>
+</head>
+<body >
+   
+<div class="container">    
+  <div class="category-box">
+    <div class="category1" style="outline: none;overflow:scroll; -webkit-overflow-scrolling: touch;positon:fixed" tabindex="5000">
+      <ul class="clearfix">
+          <volist name="catList" id="vo">
+              <li <eq name="i" value="1">class='cur' </eq> >
+                  <a href="javascript:void(0);" >{$vo['catName']}</a>
+              </li>
+          </volist>
+      </ul>
+    </div>
+  <div class="category2" style=" outline: none;overflow:scroll; -webkit-overflow-scrolling: touch; positon:fixed" tabindex="60000">
+      <volist name="catList" id="vo" key="m">
+      <dl <if condition='$m neq 1'>style='display:none;' </if> >
+        <volist name="vo['catChildren']" id="voo">
+                <dt><a href="#" >{$voo['catName']}</a></dt>
+                <dd class="clearfix">
+                    <div class="fenimg">
+                        <volist name="voo['catChildren']" id="vooo">
+                            <div class="fen_img">
+                                <a href="/Wx/Goods/getGoodsList/c3Id/{$vooo['catId']}">
+
+                                    <img src="__ROOT__/{$vooo['catImg']}" onerror="javascript:this.src='/Upload/mall/2016-04/570880247854a.gif'"/>
+                                    <em>{$vooo['catName']}</em>
+                                </a>
+                            </div>
+                        </volist>
+                    </div>
+                 </dd>
+        </volist>
+      </dl>
+     </volist>
+  </div>
+  </div>
+</div>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/common.js"></script>
+<script src="__WX__js/category.js"></script>
+<script src="__WX__js/jquery.nicescroll.min.js?v=1"></script>
+<script type="text/javascript" src="http://www.zhangxinxu.com/study/js/mini/jquery.scrollLoading-min.js"></script>
+<include file="public:wechat"/>
+</body>
+</html>
+<script>
+    $(function(){
+        $(".category1").css("overflow","scroll");
+        $(".category2").css("overflow","scroll");
+    })
+</script>

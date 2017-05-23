@@ -1,0 +1,75 @@
+<!DOCTYPE html >
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>用户中心_推荐列表</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css">
+<link rel="stylesheet" type="text/css" href="__WX__css/user.css">
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/jquery.json.js"></script><script type="text/javascript" src="__WX__js/transport.js"></script><script type="text/javascript" src="__WX__js/common.js"></script><script type="text/javascript" src="__WX__js/utils.js"></script>
+	</head>
+<style>
+    ul{list-style: none; }
+    b,i{ font-weight:normal;}
+    .cont_px{width: 100%;}
+    .cont_px ul{ border-bottom: 1px solid #f2f2f2; overflow: hidden; padding: 5px 0px; background: rgba(124, 124, 124, 0.58);}
+    .cont_px ul li{float: left; line-height: 25px;font-size: 14px;}
+    .ref_lists{width: 100%;}
+    .ref_lists ul{ border-bottom: 1px solid #f2f2f2; overflow: hidden; padding: 5px 0px; background: #fff;}
+    .ref_lists ul li{float: left; line-height: 25px;font-size: 14px;}
+</style>
+<body style="background: rgb(235, 236, 237);">
+
+<?php $title_name = '我的推荐列表'; ?>
+<include file="public:header" />
+
+ <include file="public:menu"/>
+        
+<div id="wrapper">
+  <div id="viewport">
+  <div class="order_list">
+
+    <div id="referrerList" class="ref_list">
+        <div class="cont_px">
+            <ul>
+                 <li style="width: 15%;text-align: center; ">序号</li>
+                 <li  style="width: 25%;text-align: center; ">昵称</li>
+                 <li style="width: 60%;text-align: center; ">注册时间</li>
+            </ul>
+        </div>
+        <div class="ref_lists">
+            <ul>
+                <volist name="referrer" id="vo" key="key">
+                    <li style="width: 15%;text-align: center; ">{$key}</li>
+                    <li style="width: 25%;text-align: center; "><if condition="$vo.nickName ==''">{$vo.userName}<else/>{$vo.nickName}</if></li>
+                    <li style="width: 60%;text-align: center; ">{$vo.createTime}</li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+<div style="background:#FFF;">
+
+</div>
+</div>
+ 
+
+<script type="text/javascript">
+var from_order_empty = "请选择要合并的从订单";
+var to_order_empty = "请选择要合并的主订单";
+var order_same = "主订单和从订单相同，请重新选择";
+var confirm_merge = "您确实要合并这两个订单吗？";
+</script>
+
+      <include file="public:footer"/>
+
+
+  </div>
+</div>
+<include file="public:wechat"/>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <!-- 禁止数字识自动别为电话号码 -->
+    <meta name="format-detection" content="telephone=no"/>
+    <title>入驻申请</title>
+    <link rel="stylesheet" href="__WX__bx/css/yj-base.css"/>
+    <link rel="stylesheet" href="__WX__bx/css/feedback.css"/>
+    <style>
+        .yj-full-body input{
+            width: 90%;
+            padding: 0 3%;
+            height: 36px;
+            margin-right: 5%;
+            margin-bottom: 3%;
+            background: transparent;
+            border: none;
+            vertical-align: middle;
+            margin-top: -2px;
+            -webkit-appearance: none;
+            color: #666;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+<div class="yj-header">
+    <a class="yj-icon yj-icon-left yj-left" href='javascript:;' onClick="javascript :history.go(-1);"></a>
+    <h1 class="yj-title">入驻申请</h1>
+</div>
+<div class="yj-full-body">
+    <form action="/wx/users/goSettled" method="post">
+        <input name="userName" type="text" placeholder="联系人" />
+        <input name="mobile" type="tel"  placeholder="手机号码" />
+        <input name="telePhone" type="text"  placeholder="固定电话" />
+        <textarea name="remark" maxlength="500" placeholder="简要说明店铺（请输入250个字内）"></textarea>
+        <button type="submit">提交申请</button>
+    </form>
+</div>
+<script src="__WX__js/jquery.js"></script>
+<script>
+    $(function () {
+        $(".yj-full-body").height($(window).height() - $(".yj-header").height());
+    })
+</script>
+</body>
+</html>

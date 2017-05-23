@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <!-- 禁止数字识自动别为电话号码 -->
+    <meta name="format-detection" content="telephone=no"/>
+    <title>商品收藏</title>
+    <link rel="stylesheet" href="__WX__bx/css/yj-base.css"/>
+    <link rel="stylesheet" href="__WX__bx/css/collection.css"/>
+</head>
+<body>
+<div class="yj-header">
+    <a class="yj-icon yj-icon-left yj-left" href='javascript:;' onClick="javascript :history.go(-1);"></a>
+    <h1 class="yj-title">商品收藏</h1>
+</div>
+<div class="yj-full-body" style="overflow: scroll;position:relative;  -webkit-overflow-scrolling: touch;">
+    <div class="yj-media yj-full-media">
+        <notempty name="goodspage" >
+        <volist name="goodspage" id="vo">
+                <div class="yj-media-list">
+                    <div class="yj-media-img yj-pull-left">
+                        <a href="/wx/goods/getgoodsdetails/goodsId/{$vo.goodsId}"><img src="__ROOT__/{$vo.goodsThums}"/></a>
+                    </div>
+                    <div class="yj-media-body yj-pull-right">
+                        <h4 class="yj-media-title">{$vo.goodsName}</h4>
+
+                        <p class="yj-media-content">{$vo.goodsName}</p>
+
+                        <p class="yj-media-cash">￥<i>{$vo.shopPrice}</i></p>
+                        <button type="button" data-goodsid="{$vo.favoriteId}"><span class="yj-icon yj-icon-like" ></span></button>
+                    </div>
+                </div>
+        </volist>
+        <else/>
+            <div class="yj-media-list" >
+                暂无收藏商品...
+            </div>
+        </notempty>
+    </div>
+</div>
+<script src="__WX__js/jquery.js"></script>
+<script src="__WX__bx/js/hammer.min.js"></script>
+<script src="__WX__bx/js/jquery.hammer.js"></script>
+
+<script>
+    $(function () {
+        $(".yj-full-body").height($(window).height() - $(".yj-header").height());
+        $(".yj-media-body").each(function () {
+            $(this).find("button").hammer().on("tap", function () {
+                if ($(".alert").is(":hidden"))
+                    $(".alert").remove()
+                $(this).parents(".yj-media-list").remove();
+                var id = $(this).data("goodsid");
+                $.post("/Wx/Users/quxiao", {id:id}, function(data){
+                    if(data.status==1){
+                       //成功
+                        $(".yj-full-body").prepend("<div class=alert>已取消收藏</div>");
+                        $(".alert").delay(800).fadeOut(300);
+                    }else{
+                        $(".yj-full-body").prepend("<div class=alert>取消收藏失败</div>");
+                        $(".alert").delay(800).fadeOut(300);
+                        //失败
+                    }
+                });
+
+            })
+        })
+    })
+</script>
+<include file="public:wechat"/>
+</body>
+</html>

@@ -1,0 +1,102 @@
+
+<!DOCTYPE html >
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>确定订单</title>
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/activity.css"/>
+    <script type="text/javascript" src="__WX__js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="__WX__css/order.css"/>
+
+    <script type="text/javascript" src="__WX__js/common.js"></script></head>
+
+
+<body style="background:#f4f2f3; font-size: 12px; ">
+<php>$title_name = "确定订单";</php>
+
+<include file="public:header" />
+<include file="public:menu"/>
+<form action="{:U('shop/order_post')}" method="post" id="order_post">
+<!--<a href="#" class="tjdz"><b>+</b>前先添加收货地址</a> 	-->
+<a href="{:U('user/addresslist')}" class="ad_tjdz">
+    <input name="address_id" value="{$address['id']}" type="hidden">
+    <neq name="address['id']" value="">
+        <div class="tjdz_top clearfix">
+            <div class="tjdz_name float-l">收货人：<span>{$address['realname']}</span></div>
+            <div class="tjdz_tel float-r">{$address['phone']}</div>
+        </div>
+        <div class="tjdz_add">
+            收货地址:<span>{$address['address']}</span>
+        </div>
+    <else />
+        请添加地址
+    </neq>
+    <img class="ad_wz" src="__WX__images/icons_07.png" width="10" height="15" />
+</a>
+<volist name="cart" id="vo">
+<div class="zc_bt">{$vo.business}</div>
+<div class="zc_pic">
+    <div class="mall_img float-l">
+        <img width="100" height="100" src="__ROOT__/data/upload/items/{$vo.picture|get_thumb_img=###,'_m'}" />
+    </div>
+    <div class="zc_text1 float-r">
+        <div class="zc_text1_left float-l">{$vo.title}</div>
+        <div class="zc_text1_right float-r"><span class="zc_color">
+				&#165;<b><if condition='$vo.rel_price'>{$vo.rel_price}<else/>{$vo.discount}</if></b></span><br/>
+            <span>x{$vo['number']}</if></span>
+        </div>
+        <volist name="vo.relation" id="rel">
+            <div class="zc_text1_left float-l" style="margin-top: 5px; color: #999;">{$attr_name[$rel[attr_id]]}:<span>{$rel.attr_value}</span></div>
+        </volist>
+    </div>
+</div>
+</volist>
+<div class="zc_center">
+<!--    <div class="zc_hang">
+        <div class="zc_left">购买数量</div>
+        <div class="zc_right">
+            <div class="float-r clearfix" style="margin:4px 0px 2px 0px;">
+                <a class="sub_bt dispalyinlineblock float-l" href="javascript:void(0);">-</a>
+                <input class="dispalyinlineblock input_text float-l" style="width:30px;" value="1" maxlength="3" type="text">
+                <a class="add_bt dispalyinlineblock float-l" href="javascript:void(0);">+</a>
+            </div>
+        </div>
+    </div>-->
+    <div class="zc_hang">
+        <div class="zc_left">快递费</div>
+        <div class="zc_right zc_color">&#165; {$postage_price}</div>
+        <input name="postage_price" value="{$postage_price}" type="hidden" />
+    </div>
+
+</div>
+</form>
+
+
+<div style="height:100px; line-height:50px; clear:both;"></div>
+
+<div class="v_nav" style="height:37px; background: #fff;">
+    <div class="mstzbox">
+        <div class="car_fxk car_fxk1"><span class="icon-xuanzeyixuanze span_wz3"></span></div>
+        <a class="wyzc mstzbox-cor1"><div class="wyzc_cc">共{$shop_count}件，合计：<span class="zc_color">&#165;<b>{$amount_price}</b></span></div></a>
+        <a href="javascript:void(0)" id="zcPay" class="wyzc mstzbox-gz mstzbox-cor2">确定</a>
+    </div>
+</div>
+
+<!--<include file="public:footer" />-->
+</body>
+<script>
+    $("#zcPay").click(function(){
+       if(!$("input[name='address_id']").val()){
+           alert("地址未填写!");
+           return false;
+       }
+       $("#order_post").submit();
+    });
+</script>
+</html>

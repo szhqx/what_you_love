@@ -1,0 +1,63 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>爱乐享商品分类</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/catalog.css"/>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+
+<script type="text/javascript" src="__WX__js/common.js"></script>
+<script type="text/javascript" src="__WX__js/mobile.js" ></script>
+</head>
+<body >
+   
+<div class="container">    
+  <div class="category-box">
+    <div class="category1" style="outline: none;" tabindex="5000">
+      <ul class="clearfix">
+          <foreach name="cate_data" item="vo" key="m">
+              <if condition="$vo['pid'] eq 0">
+              <li <if condition='$m eq 1'>class='cur' </if> >
+                  <a href="javascript:void(0);" >{$vo.name}</a>
+              </li>
+              </if>
+          </foreach>
+      </ul>
+    </div>
+
+  <div class="category2" style=" outline: none;" tabindex="5001">
+    <foreach name="cate_data" item="vo" key="m">
+    <if condition="$vo['pid'] eq 0">
+      <dl <if condition='$m neq 1'>style='display:none;' </if> ">
+        <foreach name="cate_data" item="voo">
+            <if condition="$voo['pid'] eq $vo['id']">
+                <dt><a href="#" >{$voo['name']}</a></dt>
+                <dd class="clearfix">
+                    <div class="fenimg">
+                        <foreach name="cate_data" item="vooo">
+                            <if condition="$vooo['pid'] eq $voo['id']">
+                            <div class="fen_img">
+                                <a href="/index.php?m=items&a=index&sort={$vooo['id']}"><em>{$vooo['name']}</em></a>
+                            </div>
+                            </if>
+                        </foreach>
+                    </div>
+                 </dd>
+            </if>
+        </foreach>
+      </dl>
+    </if>
+    </foreach>
+  </div>
+  </div>
+</div>
+
+<script src="__WX__js/category.js"></script>
+<script src="__WX__js/jquery.nicescroll.min.js"></script> 
+</body>
+</html>

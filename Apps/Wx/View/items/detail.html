@@ -1,0 +1,152 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>产品详情</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link href="__WX__css/royalslider.css" rel="stylesheet">
+<link href="__WX__css/rs-minimal-white.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/activity.css?d=2016"/>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+
+<script type="text/javascript" src="__WX__js/common.js"></script></head>
+<script type="text/javascript" src="__WX__js/detail.js"></script></head>
+<body style="background:#f4f2f3; ">
+     <php>$title_name='商品详情'</php>
+     <include file="public:header" />
+     <include file="public:menu"/>
+
+
+<div class="sliderContainer fullWidth clearfix">
+<div id="full-width-slider" class="royalSlider heroSlider rsMinW">
+    <div class="rsContent"> <img class="rsImg" src="__ROOT__/data/upload/items/{$goods.picture|get_thumb_img=###,'_m'}" />
+    </div>
+</div>
+</div>
+
+<div class="cpname"><span>{$goods.title}</span>
+<strong>￥<if condition="$goods.rel_price neq ''">{$goods.rel_price}<else/>{$goods.discount}</if></strong>
+  <div class="cpcase">
+    <ul>
+      <li>剩余：<var>{$goods.stock}</var></li>
+      <li>运费：<var>0.00</var></li>
+      <li>全网销量：<var>{$goods.success_num}</var></li>
+    </ul>
+  </div>
+    <div class="cartnum clearfix">
+        <span class="cicon minus">-</span>
+        <span class="cnum"><input type="text" value="1" max="{$goods.stock}" min="1" id="goods_{$goods.id}" readonly/></span>
+        <span class="cicon plus">+</span>
+    </div>
+</div>
+
+<div class="store">
+  <ul>
+    <li><a href="#"> 
+        <div class="store-lef"><i><img src="__WX__images/dianpu.png" class="dianpu"></i>商家名称：{$goods.business}</div>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="cpmessage">
+  <ul style="display: none;">
+    <li class="cur"><a>商品详情</a></li>
+    <li class=""><a>商品评价</a></li>
+  </ul>
+</div>
+<div class="spxq" style="padding:0px;">
+    {$goods.flow|stripslashes}
+</div>
+
+
+ <include file="public:footer"/>
+ <div style="height:40px; line-height:50px; clear:both;"></div>
+ <div style="height:50px; line-height:50px; clear:both;"></div>
+ <div id="caidan">
+   <div class="caidan liji" onclick="go_cart('{$goods.id}')">  立即购买</div>
+     <div class="caidan jiaru" onclick="add_cart('{$goods.id}')" >加入购物车</div>
+ </div>
+<script src="__WX__js/jquery-1.8.3.min.js"></script>
+<script src="__WX__js/jquery.royalslider.min.js"></script>
+<script>
+      jQuery(document).ready(function($) {
+  $('#full-width-slider').royalSlider({
+    arrowsNav: true,
+    loop: false,
+    keyboardNavEnabled: true,
+    controlsInside: false,
+    imageScaleMode: 'fill',
+    arrowsNavAutoHide: false,
+    autoScaleSlider: true,
+    autoScaleSliderWidth: 960,     
+    autoScaleSliderHeight: 350,
+    controlNavigation: 'bullets',
+    thumbsFitInViewport: false,
+    navigateByClick: true,
+    startSlideId: 0,
+    autoPlay: false,
+    transitionType:'move',
+    globalCaption: true,
+    deeplinking: {
+      enabled: true,
+      change: false
+    },
+    imgWidth: 1400,
+    imgHeight: 680
+  });
+  $(".rsNav").hide(); // 隐藏点
+});
+</script>
+ <script type="text/javascript">
+     var button_compare = "";
+     var exist = "您已经选择了%s";
+     var count_limit = "最多只能选择4个商品进行对比";
+     var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+     var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+     var btn_buy = "购买";
+     var is_cancel = "取消";
+     var select_spe = "请选择商品属性";
+ </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+  $(".cpmessage li").click(function(){
+  $(this).addClass("cur").siblings().removeClass("cur");
+  });
+      $(".jiaru").click(function () {
+          var flyElm = $(".rsSlide ").find('.rsMainSlideImage').first().clone().css('opacity','0.9');
+          flyElm.css({
+              'z-index': 1800,
+              'display': 'block',
+              'position': 'absolute',
+              'top': $('.jiaru').offset().top +'px',
+              'left': $('.jiaru').offset().left +'px',
+              'width': $('.jiaru').width() +'px',
+              'height': $('.jiaru').height() +'px',
+              'text-align':'center',
+              'margin':'0'
+          });
+          $('body').append(flyElm);
+          flyElm.animate({
+              top:$('.h-right').offset().top,
+              left:$('.h-right').offset().left,
+              width:50,
+              height:50,
+              opacity:0
+          },'slow');
+          setTimeout(function(){ //清除动画样式
+              flyElm.remove();
+          },1000);
+      });
+  
+ 
+});
+</script>
+
+    </body>
+</html>

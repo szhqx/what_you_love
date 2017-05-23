@@ -1,0 +1,90 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta name="Generator" content="qianpok" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>用户中心_地址管理</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css">
+<link rel="stylesheet" type="text/css" href="__WX__css/user.css">
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+    <script type="text/javascript" src="__WX__js/common.js"></script>
+    <script type="text/javascript" src="__WX__js/address.js"></script>
+</head>
+<body style="background: rgb(235, 236, 237);">
+<include file="public:header" />
+<include file="public:menu"/>
+<style>
+    .addresslist{
+        border: 1px solid red;
+        padding:1px;
+    }
+    .list_footer{
+        text-align: center;
+    }
+    .list_footer a{
+        display:initial;
+        padding: 5px 10px 5px 10px;
+    }
+</style>
+<div id="wrapper">
+      <div id="viewport">
+          <div class="address_list">
+              <div id="OrderList" class="ord_list">
+                  <volist name="List" id="vo" key='i'>
+                  <div data-id="{$vo['addressId']}" <if condition="$vo['isDefault'] == 1"> class="addresslist address"<else />class="address" </if>>
+                  <h2><span>收件人：</span> {$vo['userName']}</h2>
+                      <dl class="dingdan">
+                          <dd><p>联系电话 &nbsp;{$vo['userTel']}&nbsp;{$vo['userPhone']}</p></dd>
+                      </dl>
+                      <dl class="dingdan">
+                          <dd><p>{$vo['areaName1']}{$vo['areaName2']}{$vo['areaName3']}{$vo['address']}</p></dd>
+                      </dl>
+                   </div>
+                  <ul>
+                      <li> &nbsp;</li>
+                      <li>
+                          <a href="javascript:delAddress({$vo['addressId']})">删除</a>&nbsp;
+                          <a href="javascript:toEditAddress({$vo['addressId']})">编辑</a>
+                      </li>
+                  </ul>
+
+                  </volist>
+              </div>
+          </div>
+      </div>
+    <div style=" width:100%; height:50px;">
+    </div>
+    <div class="list_footer">
+        <a href="{:U('Orders/checkOrderInfo')}">返回确认订单</a>
+        <a href="javascript:void(0);" onclick='javascript:toEditAddress(0)'>添加新地址</a>
+    </div>
+</div>
+<script>
+    $(".address").click(function(){
+        var this_event = $(this);
+        var address_id = this_event.data("id");
+        $.ajax({
+            url:"/Wx/UserAddress/setdefault",
+            data:{id:address_id},
+            type:'post',
+            dataType:'json',
+            success:function(data){
+                if(data.status ==1){
+                    WST.msg('操作成功!', {icon: 1}, function(){
+                        this_event.addClass("addresslist").siblings().removeClass("addresslist");
+                    });
+                }else{
+                    WST.msg('操作失败!', {icon: 5});
+                    return false;
+                }
+            }
+        });
+    });
+</script>
+<include file="public:wechat"/>
+</body>
+</html>

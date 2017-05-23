@@ -1,0 +1,82 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta name="Generator" content="qianpok" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>用户中心_添加地址</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css">
+<link rel="stylesheet" type="text/css" href="__WX__css/user.css">
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/common.js"></script>
+    <script type="text/javascript" src="__WX__js/mobile.js" ></script>
+    <script type="text/javascript" src="__WX__js/address.js"></script>
+    <script src="__PUBLIC__/plugins/formValidator/formValidator-4.1.3.js"></script>
+</head>
+<body style="background: rgb(235, 236, 237);">
+<script>
+    $(function () {
+        <if condition="$object['addressId'] != 0">
+                getAreaList('areaId2','{$object['areaId1']}',0,'{$object['areaId2']}');
+                 getAreaList("areaId3",'{$object.areaId2}',1,'{$object.areaId3}');
+        </if>
+    });
+
+</script>
+<include file="public:header" />
+<include file="public:menu"/>
+<div id="wrapper">
+  <div id="viewport">
+
+<div class="addressmone">
+    <input type='hidden' id='consigneeId' value='{$object['addressId']}'/>
+    <form name="myform" method="post" id="myform" autocomplete="off" onclick="">
+	<ul>
+       <li>
+    	<span>收货人</span>  <input type="text" id='userName' name='userName'  value='{$object['userName']}'  placeholder="收货人"/>
+		</li>
+       <li>
+    		<select id='areaId1' onchange='javascript:getAreaList("areaId2",this.value,0)' class="province_select" >
+                     <option value="0">请选择</option>
+                        <volist name="areaList" id="vo">
+                            <option value='{$vo['areaId']}' <if condition="$object['areaId1'] == $vo['areaId'] ">selected</if>>{$vo['areaName']}</option>
+                        </volist>
+                </select>
+           <select id='areaId2' onchange='javascript:getAreaList("areaId3",this.value,1);'>
+               <option value=''>请选择</option>
+           </select>
+           <select id='areaId3'>
+               <option value=''>请选择</option>
+           </select>
+        	</li>
+           <li>
+    		 <span>详细地址</span> <input type="text"  id='address' name='address'  value='{$object['address']}' placeholder="详细地址"/>
+	        </li>
+           <li>
+		<span>电话</span> <input type="text" id='userTel' name='userTel' value="{$object['userTel']}"  placeholder="电话" onkeyup="javascript:WST.isChinese(this,1)"/>
+	        </li>
+            <li>
+		 <span>手机</span> <input type="text"  maxlength="11" id='userPhone' name='userPhone' value="{$object['userPhone']}" onkeyup="javascript:WST.isChinese(this,1)" onkeypress="return WST.isNumberdoteKey(event)"  placeholder="手机"/>
+	        </li>
+        <li>
+            <span>设默认地址</span>
+            <input type='radio' id='isDefault1' style="margin-top: 10px;" name='isDefault' value='1' <if condition="$object['isDefault'] == 1">checked</if>/>是
+            <input type='radio' id='isDefault0'  style="margin-top: 10px;" name='isDefault' value='0' <if condition="$object['isDefault'] == 0">checked</if>/>否
+        </li>
+    	</ul>
+            <div style=" height:50px"></div>
+                  <div class="dotm_btn" style="padding-left: 30%;">
+				<input type="button" value="保存" onclick="saveAddress();"  class="dotm_btn1 wst-btn-query"/>
+                </div>
+
+
+    </form>
+</div>
+</div>
+</div>
+<include file="public:wechat"/>
+</body>
+</html>

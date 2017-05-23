@@ -1,0 +1,302 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>产品详情</title>
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link href="__WX__css/royalslider.css" rel="stylesheet">
+    <link href="__WX__css/rs-minimal-white.css" rel="stylesheet">
+    <link rel="stylesheet" href="__WX__css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/activity.css?d=20160512"/>
+</head>
+<style>
+    .wst-goods-attrs-on {
+        border: 2px solid #fb4f1c;
+        color: #fb4f1c;}
+    .clear{clear:both;}
+    html,body{overflow-x:hidden;}
+    .cpmessage ul li a {
+        font-size: 13px;
+    }
+    .cpname .wst-goods-attrs {
+        border: 1px solid #fff;
+    }
+    .cpname .wst-goods-attrs-on {
+        border: 1px solid #fb4f1c;
+        padding: 0px 10px;
+    }
+    .liji, .jiaru {
+        font-size: 18px;
+    }
+    .cpcase ul {
+        border-top: 0px solid #efefef;
+        padding-left: 20px;
+    }
+    .cpcase{
+        margin-left: 0px;
+    }
+    .header {
+        width: 100%;
+        height: 45px;
+        background: rgba(239, 43, 45, 0);
+        top: 0;
+        z-index: 9999;
+        border: 0;
+        border-bottom: 1px solid #c2c2c2; }
+    .cpmessage ul li{
+        display: inline-block;
+        width: 22.333%;
+        float: left;
+        text-align: center;
+        background-color: transparent;
+        position: relative;
+        left: 18.5%;
+        line-height:40px;
+    }
+    .alert{
+        width: 100px;
+        height: 100px;
+        background: rgba(0,0,0,.8);
+        color: #ffffff;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /*margin-top: -50px;*/
+        /*margin-left: -50px;*/
+        line-height: 100px;
+        text-align: center;
+        -webkit-border-radius: 10px;
+        -webkit-transform:translate(-50%,-50%);
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        z-index: 999999;
+    }
+
+</style>
+<body style="background:#f4f2f3; overflow-x:hidden;overflow-y:auto">
+
+<!--<php>$title_name='商品详情'</php>-->
+<!--<include file="public:header" />-->
+<!--<include file="public:menu"/>-->
+<div style="height: 45px"></div>
+<header  style="position: fixed;top:0px;width:100%;z-index: 99;    background: #F4F2F3;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav"  style="position: absolute;top: 10px;color: #000;left: 2%"></a>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="cpmessage" style="margin-top: 0px;">
+                <ul>
+                    <li class="cur"><a href="javascript:void(0);">商品</a></li>
+                    <li class=""><a  href="javascript:void(0);">详情</a></li>
+                    <li class=""><a  href="javascript:void(0);">评价</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</header>
+<div class="categoodsimg">
+<div id="spxq">
+
+    <input id="shopId" type="hidden" value="{$goodsDetails['shopId']}"/>
+    <input id="goodsId" type="hidden" value="{$goodsDetails['goodsId']}"/>
+    <div class="banner">
+        <!--焦点图-->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="__ROOT__/{$goodsDetails['goodsImg']}" /></div>
+                <volist name="goodsImgs" id="vo">
+                    <div class="swiper-slide"><img src="__ROOT__/{$vo['goodsImg']}"  /></div>
+                </volist>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="cpname" style="overflow:hidden">
+        <span style="white-space:normal;border-buttom: 1px solid #efefef;">{$goodsDetails["goodsName"]}<a href="javascript:void(0);" onclick="favoriteGoods({$goodsDetails['goodsId']});"><var id="f0_txt" style="font-size: 14px;float: right;padding-right: 18px;color: red;" f="{$favoriteGoodsId}">[<if condition="$favoriteGoodsId neq '0'">已收藏<else/>收藏</if>]</var></a></span>
+        <strong>￥<var id='shopGoodsPrice_{$goodsDetails["goodsId"]}' dataId='{$goodsDetails["goodsAttrId"]}'><if condition="$goodsDetails.attrPrice neq ''">{$goodsDetails.attrPrice}<else/>{$goodsDetails.shopPrice}</if></var>
+        </strong>
+        <div class="cpcase">
+            <ul>
+                <li>库存：<var id='goodsStock'>{$goodsDetails['goodsStock']}</var>{$goodsDetails['goodsUnit']}</li>
+                <li>运费：<var>{$goodsDetails["deliveryStartMoney"]}元起，配送费{$goodsDetails["deliveryMoney"]}元，{$goodsDetails["deliveryFreeMoney"]}元起免配送费</var></li>
+            </ul>
+        </div>
+        <input id="test" hidden value="<if condition="( count($goodsAttrs['priceAttrs']) gt 0)">1</if>">
+        <input id="testattr" hidden value="" >
+        <if condition="( count($goodsAttrs['priceAttrs']) gt 0) or ( count($goodsAttrs['attrs']) gt 0) "><span style="font-size: 14px;">商品属性</span></if>
+        <if condition=" count($goodsAttrs['priceAttrs']) gt 0">
+            <div class="cpcase">
+                <ul style=" border-top: 1px solid #efefef;">
+                    <li>{$goodsAttrs["priceAttrName"]}：
+                        <volist name="goodsAttrs['priceAttrs']" id="avo">
+                            <span class='wst-goods-attrs' dataId='{$avo["id"]}' onclick='javascript:checkStock(this)'>{$avo['attrVal']}</span>
+                            <!--<if condition=" $goodsDetails['goodsAttrId'] eq $avo['id']">wst-goods-attrs-on</if> 默认选择-->
+                        </volist>
+                    </li>
+                </ul>
+            </div>
+        </if>
+        <if condition=" count($goodsAttrs['attrs']) gt 0">
+            <div class="cpcase" id="attrs">
+                <ul>
+                    <volist name="goodsAttrs['attrs']" id="voa">
+                        <li><es >{$voa["attrName"]}</es>：
+                            <volist name="voa['attrContent']" id="bvo" key="m">
+                                <span class='wst-goods-attrs ' dataid='{$voa[id]}' datakey='{$m-1}' onclick='javascript:checkStocks(this)'>{$bvo}</span>
+                                <!--<if condition="$bvo eq $voa['attrContent'][0]">wst-goods-attrs-on</if> 默认选择-->
+                            </volist>
+                            <input id="attrs{$voa[id]}" type="hidden" data-attrid='{$voa[id]}' value=""/>
+                            <!--{$voa[id]}_{$m-$m}-->
+                        </li>
+                    </volist>
+
+                </ul>
+            </div>
+        </if>
+
+        <div class="cartnum clearfix" style="top: 80px;    right: 18px;">
+            <span class="cicon minus">-</span>
+            <span class="cnum"><input type="text" value="1" max="{$goodsDetails.goodsStock}" min="1" id="buy-num" readonly/></span>
+            <span class="cicon plus">+</span>
+        </div>
+    </div>
+
+    <div class="store">
+        <ul>
+            <li><a href="{:U('wx/shops/index',array('shopId'=>$shopId))}">
+                <div class="store-lef"><i><img src="__WX__images/dianpu.png" class="dianpu"></i>商家名称：{$goodsDetails["shopName"]}</div>
+            </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div  id="spcs" style="display: none;">
+    <div class="spxq" style="overflow:hidden;  width: 100%;    font-size: 14px;">
+        {$goodsDetails.goodsDesc|stripslashes}
+    </div>
+    <div class="spcs"  style="padding: 10px;  width: 100%;    font-size: 14px;">
+        {$goodsDetails.goodsParameter|stripslashes}
+    </div>
+</div>
+<div class="sppj" id="sppj" style="display: none; font-size: 14px;">
+    <table style="font-size: 16px;
+    color: #333333;
+    font-family: 黑体;
+    background-color: #FFFFFF;width: 100%;">
+        <notempty name="appraise">
+            <volist name="appraise" id="vo">
+                <tr style="">
+                    <td style="width: 40%;">[<if condition="$vo.nickName !=''">{$vo.nickName}<else/><if condition="$vo.userName ==''">匿名<else/>{$vo.userName}</if></if>]说：</td>
+                    <td>{$vo.content}</td>
+                </tr>
+            </volist>
+            <else/>
+            <tr>
+                暂无评论
+            </tr>
+        </notempty>
+    </table>
+</div>
+</div>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+
+<script type="text/javascript" src="__WX__js/common.js"></script>
+<script type="text/javascript" src="__WX__js/detail.js?v=111"></script>
+<script src="__ROOT__/Apps/Wx/View/goods.js?v=222"></script>
+<script src="__PUBLIC__/plugins/layer/layer.min.js"></script>
+<include file="public:footer"/>
+<div style="height:40px; line-height:50px; clear:both;"></div>
+<div style="height:50px; line-height:50px; clear:both;"></div>
+<div id="caidan">
+    <div class="caidan liji" onclick="go_cart('{$goodsDetails.goodsId}')">  立即购买</div>
+    <div class="caidan jiaru " onclick="add_cart('{$goodsDetails.goodsId}')" >加入购物车</div>
+</div>
+<script src="__WX__js/mui.min.js"></script>
+<script src="__WX__js/jquery-1.8.3.min.js"></script>
+<script src="__WX__js/jquery.royalslider.min.js"></script>
+<!--焦点图-->
+<link rel="stylesheet" href="__WX__css/swiper.min.css" type="text/css">
+<script src="__WX__js/swiper.min.js"></script>
+<script type="text/javascript" src="http://www.zhangxinxu.com/study/js/mini/jquery.scrollLoading-min.js"></script>
+<script>
+    //焦点图
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 0,
+        autoplay : 8000
+    });
+</script>
+<script type="text/javascript">
+    var button_compare = "";
+    var exist = "您已经选择了%s";
+    var count_limit = "最多只能选择4个商品进行对比";
+    var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+    var btn_buy = "购买";
+    var is_cancel = "取消";
+    var select_spe = "请选择商品属性";
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".lazyload").scrollLoading({ container: $(".categoodsimg") });
+        $(".cpmessage li").click(function(){
+            $(this).addClass("cur").siblings().removeClass("cur");
+            if($(this).children("a").html() =='商品'){
+                $("#spxq").show();
+                $("#sppj").hide();
+                $("#spcs").hide();
+            }
+            if($(this).children("a").html() =='评价'){
+                $("#sppj").show();
+                $("#spxq").hide();
+                $("#spcs").hide();
+            }
+            if($(this).children("a").html() =='详情'){
+                $("#spcs").show();
+                $("#spxq").hide();
+                $("#sppj").hide();
+            }
+        });
+    });
+    //spxq 商品 spcs 商品详情及参数 sppj 评价
+    $(function(){
+        $(window).scroll(function(){
+            if($(document).scrollTop() > $(document).height()-$(window).height()-$('.footer').height()) { //页面拖到底部了
+//                if($(".cur").children("a").html() =='商品'){
+//                    $("#spcs").show();
+//                    $("#sppj").hide();
+//                    $("#spxq").hide();
+//                    $('.cpmessage').children('ul:first').children('li:eq('+1+')').addClass("cur").siblings().removeClass("cur");
+//                    return false;
+//                }
+//                if($(".cur").children("a").html() =='详情'){
+//                    $("#sppj").show();
+//                    $("#spcs").hide();
+//                    $("#spxq").hide();
+//                    $('.cpmessage').children('ul:first').children('li:eq('+2+')').addClass("cur").siblings().removeClass("cur");
+//                    return false;
+//                }
+//                if($(".cur").children("a").html() =='评价'){
+//                    $('.cpmessage').children('ul:first').children('li:eq('+0+')').addClass("cur").siblings().removeClass("cur");
+//                    $("#spxq").show();
+//                    $("#sppj").hide();
+//                    $("#spcs").hide();
+//                    return false;
+//                }
+                //$('.cpmessage').children('ul:first').children('li:eq('+i+')').show().siblings('li').hide();
+            }
+        })
+    })
+</script>
+<script src="__PUBLIC__/js/common.js"></script>
+<include file="public:wechat"/>
+</body>
+</html>

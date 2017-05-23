@@ -1,0 +1,91 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>我的购物车</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+<!--<link href="themesmobile/68ecshopcom_mobile/style.css" rel="stylesheet" type="text/css" />-->
+
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/activity.css"/>
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+
+
+<script type="text/javascript" src="__WX__js/common.js"></script></head>
+<body style="background:#f4f2f3">
+<php>$title_name = "我的购物车";</php>
+
+<include file="public:header" />
+<include file="public:menu"/>
+
+<form action="{:U('shop/order')}" method="post" id="cart">
+    <div id="wst_cartlist_pbox">
+        <empty name="cartInfo['cartgoods']">
+            <div style="text-align:center;font-size:20px;line-height:80px;">
+                您的购物车空空如也，赶快开始购物吧！
+            </div>
+            <br/>
+        </empty>
+        <volist name="cartInfo['cartgoods']" id="shopgoods">
+            <div id="wst_cart_shop_{$key}" data="{$key}">
+                <div class="thing" data-price="<if condition='$vo.rel_price'>{$vo.rel_price}<else/>{$vo.discount}</if>">
+                    <div class="thtop">
+                        <ul class="thtopul">
+                            <li><a href="{:U('wx/shops/index',array('shopId'=>$shopgoods['shopgoods'][0]['shopId']))}"><i><img src="__WX__images/dianpu.png" class="dianpu"></i><span id="sp_{$shopgoods['shopgoods'][0]['shopId']}">{$shopgoods["shopgoods"][0]["shopName"]}</span>
+                                <img src="__WX__images/icons_07.png"></a></li>
+                        </ul>
+                    </div>
+                    <div class="thbt"  id="catgoodsList">
+                        <volist name="shopgoods['shopgoods']" key="key2" id="goods">
+                            <ul class="clearfix selgoods_{$goods['goodsatts']}" id="selgoods_{$goods['goodsId']}_{$goods['goodsAttrId']}"  datakey="{$goods['goodsatts']}"  class="selgoods" <if condition="$goods['goodsStock'] lt $goods['cnt'] OR $goods['goodsStock'] eq 0">style="border:2px solid red;"</if>>
+                            <input type="hidden" value="<if condition="$goods['goodsStock'] lt $goods['cnt']">-1</if>" class="goodsStockFlag"/>
+                                <li style="width: 2%">
+                                    <input type="checkbox" style="visibility:hidden;" id="chk_goods_{$goods['goodsatts']}" datakey="{$goods['goodsatts']}"  name="chk_goods_{$goods['goodsatts']}" value="{$goods['goodsId']}" parent="{$goods['shopId']}" dataId="{$goods['goodsAttrId']}" isBook="{$goods['isBook']}" <if condition="$goods['ischk'] eq 1">checked</if>/>
+                                    <input type="hidden" class="cgoodsId" dataId="{$goods['goodsAttrId']}" datakey="{$goods['goodsatts']}" value="{$goods['goodsId']}" />
+                                    <input type="hidden" id="price_{$goods['goodsId']}_{$goods['goodsAttrId']}" value="{$goods['shopPrice']}" />
+                                </li>
+                                <li style="width: 30%"><i>
+                                    <a target="_blank" href="{:U('Wx/Goods/getGoodsDetails/',array('goodsId'=>$goods['goodsId']))}" target="_blank"><img src="__ROOT__/{$goods['goodsThums']}" onerror="javascript:this.src='/Upload/mall/2016-04/570880247854a.gif'" max-width="60" max-height="60" /></a>
+                                </i></li>
+                                <li style="width: 66%">
+                                    <div class="dianming" style="line-height: 35px; height:70px;">{:WSTMSubstr($goods["goodsName"],0,16)}</div>
+                                    <div class="desc" style="color: #999; height: 24px;">
+                                        <if condition="$goods['attrVal'] neq ''"><span>{$goods['attrName']}:{$goods['attrVal']} {$goods['goodsatts']|returnAttr}</span></if>
+                                    </div>
+                                    <div class="dprice">
+                                        ￥{$goods["shopPrice"]}
+                                        <div class="cartnum clearfix">
+                                            <span class="cicon minus wst-cartlist-plus" id="numl_{$goods['goodsId']}_{$goods['goodsAttrId']}" onclick="changeCatGoodsnum(1,'{$goods[\'shopId\']}','{$goods[\'goodsId\']}','{$goods[\'goodsAttrId\']}','{$goods[\'isBook\']}','{$goods[\'goodsatts\']}')">-</span>
+                                            <span class="cnum"><input type="text" id="buy-num_{$goods['goodsatts']}" dataId="{$goods['goodsAttrId']}" min="0" value="{$goods['cnt']}" onkeypress="return WST.isNumberKey(event);" onkeyup="changeCatGoodsnum(0,'{$goods[\'shopId\']}','{$goods[\'goodsId\']}','{$goods[\'goodsAttrId\']}','{$goods[\'isBook\']}');"  readonly/></span>
+                                            <span class="cicon plus wst-cartlist-add"  id="numr_{$goods['goodsId']}_{$goods['goodsAttrId']}" onclick="changeCatGoodsnum(2,'{$goods[\'shopId\']}','{$goods[\'goodsId\']}','{$goods[\'goodsAttrId\']}','{$goods[\'isBook\']}','{$goods[\'goodsatts\']}')">+</span>
+                                        </div>
+                                        <div style="position: absolute; text-align:center;width:20%; height: 24px; line-height: 20px; border:1px #ccc solid;background: #fff;right:2%;top: -60px;"><a href="javascript:delCatGoods('{$goods[\'shopId\']}','{$goods[\'goodsId\']}','{$goods[\'goodsAttrId\']}','{$goods[\'goodsatts\']}');">删除</a></div>
+                                    </div>
+                                </li>
+                             </ul>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+</form>
+
+<div class="insulate" style="height: 46px;"></div>
+<div class="quanbu" style="margin-bottom: 0px;">
+  <ul class="clearfix">
+    <!--<li><input type="checkbox" id="chk_all" checked class="all-check">全选</li>-->
+    <li class="heji">合计<var>￥</var><var id="wst_cart_totalmoney" class="wst-cart-totalmoney"> {$cartInfo['totalMoney']}</var>元</li>
+    <li class="jiesuan" onclick="javascript:goToPay();" >结算</li>
+  </ul>
+</div>
+<!--<include file="public:footer" />-->
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__ROOT__/Apps/Wx/View/cartpaylist.js?v=1111"></script>
+<include file="public:wechat"/>
+</html>

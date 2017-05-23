@@ -1,0 +1,35 @@
+<footer>
+    <div class="footer" style="display: none;">
+        <div class="links"  id="ECS_MEMBERZONE">
+            <if condition="$_SESSION['user_info']['id'] eq ''"><a href="{:U('user/login')}"><span>登录</span></a><a href="{:U('user/register')}"><span>注册</span></a><else/>
+                <a href="{:U('user/index')}">您好，<if condition="$_SESSION['user_info']['username'] eq ''">{$_SESSION['user_info']['nickname']}</if>{$_SESSION['user_info']['username']}，欢迎您回来</a>
+            </if>
+            <a href="javascript:window.scrollTo(0,0);"><span>回顶部</span></a>
+        </div>
+
+        <p class="mf_o4">&copy; 2005-2016 爱乐享 版权所有，并保留所有权利。</p>
+    </div>
+
+    <div style="height:50px; line-height:50px; clear:both;"></div>
+
+
+    <div class="v_nav">
+        <div class="vf_nav">
+            <ul>
+                <li> <a href="{:U('index/index')}">
+                    <i class="vf_1"></i>
+                    <span>买啥</span></a></li>
+                <li><a href="{:U('activity/index')}">
+                    <i class="vf_3"></i>
+                    <span>玩啥</span></a></li>
+                <li><a href="{:U('users/index')}">
+                    <i class="vf_5"></i>
+                    <span>我的</span></a></li>
+                <li><a href="{:U('cart/getcartinfo')}">
+                    <i class="vf_4 wst-nvg-cart-cnt" style="line-height: 14px;text-align: right;color: #ffffff;" >0</i>
+                    <span>购物车</span></a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script src="__PUBLIC__/plugins/layer/layer.min.js"></script>

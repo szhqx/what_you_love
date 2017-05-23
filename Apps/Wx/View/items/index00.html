@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>爱乐享 </title>
+	<meta name="Keywords" content="爱乐享" />
+	<meta name="Description" content="爱乐享" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+	<link rel="stylesheet" type="text/css" href="__WX__css/index.css"/>
+	<script type="text/javascript" src="__WX__js/jquery.js"></script>
+	<script type="text/javascript" src="__WX__js/jquery.json.js"></script>
+    <script type="text/javascript" src="__WX__js/transport.js"></script>
+    <script type="text/javascript" src="__WX__js/common.js"></script>
+
+
+</head>
+<body>
+<php>$title_name = "商品列表";</php>
+
+<include file="public:header" />
+<include file="public:menu"/>
+<section class="index_floor">
+  <div class="floor_body1" >
+
+      <div class="bd">
+          <ul  id="container" class="container">
+            <volist name="items" id="vo">
+              <li class="citem">
+                <a href="{:U('items/detail',array('id'=>$vo['id']))}" title="{$vo.title}">
+                  <div class="products_kuang" style="height: 119px;width: 119px;" >
+                    <img src="__ROOT__/data/upload/items/{$vo.picture|get_thumb_img=###,'_b'}" width="119" height="119" ></div>
+                  <div class="goods_name">{$vo.title}</div>
+                  <div class="price">
+                  <span href="{:U('items/detail',array('id'=>$vo['id']))}" class="price_pro">￥<if condition="$vo.rel_price neq ''">{$vo.rel_price}<else/>{$vo.discount}</if>元</span>
+                    <span class="costprice">￥{$vo.price}元</span>
+                     <a href="javascript:addToCart('{$vo.id}','{$vo.relate_id}')" class="btns">
+                    <img src="__WX__images/index_flow.png">
+                    </a>
+                  </div>
+                </a>
+              </li>
+            </volist>
+        </ul>
+          <!--加载中-->
+          <div id="loading" class="loading-wrap">
+              <span class="loading">加载中，请稍后...</span>
+          </div>
+
+      </div>
+
+</div>
+</section>
+  <include file="public:footer"/>
+<script type="text/javascript" src="__WX__js/masonry.pkgd.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //页面初始化时执行瀑布流
+        var $container = $('#container');
+        $container.masonry({
+            itemSelector : '.citem',
+            isAnimated: true
+        });
+        //用户拖动滚动条，达到底部时ajax加载一次数据
+        var loading = $("#loading").data("on", false);//通过给loading这个div增加属性on，来判断执行一次ajax请求
+        $(window).scroll(function(){
+            if(loading.data("on")) return;
+            if($(document).scrollTop() > $(document).height()-$(window).height()-$('.footer').height()){ //页面拖到底部了
+                //加载更多数据
+                loading.data("on", true).fadeIn();         //在这里将on设为true来阻止继续的ajax请求
+                $.get("{:U('items/getMore')}",
+                        function(data){
+                           //alert(data);
+                            var html = '';
+                            if($.isArray(data)){
+                                for(i in data){
+                                    html += '<li class=\"citem\">';
+                                    html += '<a href="{:U(\'items/detail\',array(\'id\'=>'+data[i].id+'))}" title="'+data[i].title+'">';
+                                    html += '<div class="products_kuang" style="height: 119px;width: 119px;" >';
+                                    html += '<img src="" width="119" height="119" ></div>';
+                                    html += '<div class="goods_name">'+data[i].title+'</div>';
+                                    html += '<div class="price">';
+                                    html += '<span href="{:U(\'items/detail\',array(\'id\'=>'+data[i].id+'))}" class="price_pro">￥0元</span>';
+                                    html += '<span class="costprice">￥'+data[i].price+'元</span>';
+                                    html += '<a href="javascript:addToCart('+data[i].id+','+data[i].relate_id+')" class="btns">';
+                                    html += '<img src="__WX__images/index_flow.png">';
+                                    html += '</a>';
+                                    html += '</div>';
+                                    html += '</a>';
+                                    html += '</li>';
+                                }
+
+                               // $container.append(html)；
+                               var $newElems = $(html).css({ opacity: 0 }).appendTo($container);
+                                //一次请求完成，将on设为false，可以进行下一次的请求
+                                loading.data("on", false);
+                            }
+                            loading.fadeOut();
+                        },
+                        "json");
+            }
+        });
+    });
+</script>
+<script>
+function goTop(){
+	$('html,body').animate({'scrollTop':0},600);
+}
+</script>
+<a href="javascript:goTop();" class="gotop"><img src="__WX__images/topup.png"></a>
+</div>
+</div>
+<script type="text/javascript">
+var button_compare = "";
+var exist = "您已经选择了%s";
+var count_limit = "最多只能选择4个商品进行对比";
+var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+var btn_buy = "购买";
+var is_cancel = "取消";
+var select_spe = "请选择商品属性";
+</script>
+</body>
+</html>

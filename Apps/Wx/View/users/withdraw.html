@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,maximum-scale=1.0,initial-scale=1.0,user-scalable=0">
+<meta name="format-detection" content="telephone=no">
+<title>会员充值</title>
+    <link rel="stylesheet" type="text/css" href="__WX__css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="__WX__css/user.css"/>
+    <link rel="stylesheet" href="__WX__iconfont/iconfont.css">
+<link type="text/css" href="__WX__bx/css/common.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/css/user.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/lib/animate-css/animate.min.css" rel="stylesheet">
+<link type="text/css" href="__WX__bx/lib/font-awesome/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<!--loading start-->
+<div class="cover" id="loading">
+    <div class="loading">
+        <div class="dot white"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+</div>
+<!--loading end-->
+<style>
+    textarea{
+    width: 94%;
+    height: 80px;
+    line-height: 36px;
+    border: 0;
+    background: none;
+    padding: 0 3%;
+    color: #666;
+    font-size: 14px;
+    vertical-align: middle;
+    margin-top: -3px;
+    }
+</style>
+<!--主页start-->
+<div class="pager">
+    <div class="bxcont">
+        <!--钱包start-->
+        <div class="purse clearfix" style="height: auto;">
+            <div class="purse_tit"><span>¥</span><b>{$userBalance}</b>可提现金额</div>
+            <div class="purse_form">
+                <div class="tit">提现信息</div>
+                <div class="txt">
+
+                    <form action="/wx/users/gowithdraw" method="post" id="rechargeFrom">
+                        <input type="text" name="withdrawNo" style="display: none;"  value="{$withdrawNo}">
+                        <div class="txtinput">
+                            <input type="number" name="money" id="money"  placeholder="提现金额">
+                        </div>
+                        <div class="txtinput" style="height: auto;">
+                            <textarea name="remark" id="remark" placeholder="提现备注"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="blank"></div>
+            <div class="bx_btn" id="czbtn">
+                <a href="javascript:void(0);">提现申请</a>
+            </div>
+        </div>
+        <div style="padding-top: 50px;">
+        <notempty name="withdrawList">
+            <div class="msglist">
+                <volist name="withdrawList" id="vo">
+                    <div class="msgitem">
+                        <div class="mtit">{$vo.createTime}提现申请金额-<span>[￥{$vo.amount}]</span></div>
+                        <!--<span hidden>【未读】</span>-->
+                        <div class="mtime"><if condition="$vo.isFlag eq '1'">已完成<elseif condition="$vo.isFlag eq '-1'"/>提交审核不通过<else/>未审核</if></div>
+                    </div>
+                </volist>
+            </div>
+            <else/>
+            <div style="display:block; width:100%; text-align: center;"><img style="margin-left: -50px;" src="__WX__bx/images/cartoon.png"/><br/>暂无提现明细</div>
+        </notempty>
+        <!--消息记录为空时显示-->
+        <!--钱包end-->
+        </div>
+    </div>
+</div>
+<!--主页end-->
+<script src="__WX__bx/lib/jquery/jquery.min.js"></script>
+<!--底部导航start-->
+<div id="wrapper">
+    <div id="viewport">
+        <include file="public:footer"/>
+    </div>
+</div>
+<include file="public:wechat"/>
+<!--底部导航end-->
+
+<script src="__WX__bx/js/msgalert.js"></script>
+<script>
+    $(function(){
+        //充值start
+        $("#czbtn").click(function(){
+            <if condition = "$inweixin eq 0">
+                    bx_alert("请在微信中打开！");
+            return false;
+            <else/>
+            var money = $("#money").val();
+            if (money == "" || isNaN(money)){
+                bx_alert("提现金额错误!请重试");
+                return false;
+            }
+            money = parseFloat(money);
+            if (money <= 0){
+                bx_alert("提现金额不能小于0!");
+                return false;
+            }
+            if((money)<=0){
+                bx_alert("提现金额必须大于0!");
+                return false;
+            }
+            $("#rechargeFrom").submit();
+            </if>
+        });
+        //关闭loading层
+        $("#loading").hide();
+
+    });
+</script>
+</body>
+</html>

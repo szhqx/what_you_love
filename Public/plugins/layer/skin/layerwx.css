@@ -1,0 +1,49 @@
+/*!
+ 
+ @Name: layer's style
+ @Author: 贤心
+ @Blog： sentsin.com
+ 
+ */
+ .layui-layer{top:5% !important;;left:2% !important;; width:96% !important; overflow:hidden; margin:0;padding:0;background-color:#fff;-webkit-background-clip:content;box-shadow:1px 1px 50px rgba(0,0,0,.3);border-radius:2px;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-duration:.3s;animation-duration:.3s}
+		.layui-layer-dialog{min-width:260px}
+
+		.layui-layer-dialog .layui-layer-content{position:relative;padding:20px;line-height:24px;word-break:break-all;font-size:14px;overflow:auto}
+		.layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute;top:16px;left:15px;_left:-40px;width:30px;height:30px}
+.layui-layer-dialog .layui-layer-padding {
+ padding: 20px 20px 20px 55px;
+ text-align: left;}
+/*弹窗*/
+.cover{position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1999; background: rgba(0, 0, 0, 0.5); display: none;}
+.cover .shareimg{position: absolute; top: 0; right: 0; width: 200px; -webkit-animation:fadeInRight .5s;}
+.cover .cover_bg{position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;}
+.msgbox{ width: 90%; position: absolute; top: 50%; left: 50%; -webkit-animation: alertIn .5s; -webkit-transform:translate(-50%,-50%); -webkit-transition: all 0.5s ease-in-out; animation: alertIn .5s; transform:translate(-50%,-50%); transition: all 0.5s ease-in-out; min-width: 200px; z-index: 2001}
+.msgbox .msgcont{position: relative; background: #fff; color: #666; padding: 0; border-radius: 5px; -webkit-box-shadow: 5px 15px 30px rgba(0,0,0,0.5); box-shadow: 5px 15px 30px rgba(0,0,0,0.5);}
+.msgbox .close{ position: absolute; top: 8px; right: 5px; color: #999; border-radius: 100%; width: 24px; height: 24px; line-height: 24px; text-align: center; cursor: pointer;}
+.msgbox .close:hover{color: #666;}
+.msgbox .tit{ font-size: 16px; text-align: center; color: #333; padding-left: 10px; padding-bottom: 5px; padding-top: 5px; border-bottom: 1px solid #ebebeb; line-height: 28px;}
+.msgbox .txt{ font-size: 14px; color: #666; line-height: 26px; padding: 10px 10px 5px; float:inherit;text-align: center;}
+.msgbox .tcenter{ text-align: center;}
+.msgbox .btn{text-align: center; border-top: 1px solid #eee; padding: 0;}
+.msgbox .btn a{display: block;}
+.msgbox .btn .btn1{ float:left; width: 50%; color: #ea5504; margin: 0; line-height: 48px;}
+.msgbox .btn .btn2{ float:left; width: 50%; color: #333; margin: 0; line-height: 48px;}
+.msgbox .btn .btn3{ width: 100%; color: #ea5504; margin: 0; line-height: 48px;}
+.msgbox .btn .btn1 a{border-right: 1px solid #eee;}
+.msgbox .btn .btn1 a,.msgbox .btn .btn3 a{color: #ea5504;}
+@-webkit-keyframes alertIn{from{opacity:0; display:none; -webkit-transform:translate(-50%,-100%);transform:translate(-50%,-100%)}100%{opacity:1;display:block; -webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}}
+@keyframes alertIn{from{opacity:0; display: none; -webkit-transform:translate(-50%,-100%);transform:translate(-50%,-100%)}100%{opacity:1; display:block; -webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}}
+.alertIn{-webkit-animation-name:alertIn;animation-name:alertIn}
+.msgform .txtinput{position: relative;}
+.msgform .formitem{margin-bottom: 5px;}
+.msgform .fl{width: 48%;}
+.msgform .fr{width: 48%;}
+.msgform .select_area .fl{width: 33%;}
+.msgselect{ max-height: 250px; overflow-y: scroll; border-bottom: 1px dotted #ebebeb; -webkit-overflow-scrolling: touch}
+.msgselect li{border-bottom: 1px dotted #ddd; line-height: 42px; text-align: center; font-size: 16px;}
+.msgselect li:active{background: #ea5504; color: #fff;}
+.msgselect .active{ color: #fff; background: #ea5504;}
+.msgselect li:last-child{border-bottom: 0;}
+.ncheck{padding: 10px 0;}
+.ncheck span{border: 1px solid #ebebeb; padding: 0 20px; line-height: 42px; margin: 5px; display: inline-block; color: #666; -webkit-transition: all 0.2s ease-in-out;}
+.ncheck .active{background: #ea5504; color: #fff; border-color: #ea5504;}

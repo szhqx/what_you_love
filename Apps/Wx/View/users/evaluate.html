@@ -1,0 +1,108 @@
+
+<!DOCTYPE html >
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>用户中心_评价</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__WX__css/public.css">
+<link rel="stylesheet" type="text/css" href="__WX__css/user.css">
+<script type="text/javascript" src="__WX__js/jquery.js"></script>
+<script type="text/javascript" src="__WX__js/jquery.json.js"></script><script type="text/javascript" src="__WX__js/transport.js"></script><script type="text/javascript" src="__WX__js/common.js"></script><script type="text/javascript" src="__WX__js/utils.js"></script>
+	</head>
+<body style="background: rgb(235, 236, 237);">
+
+      
+      <header>
+      <div class="tab_nav">
+        <div class="header">
+          <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+          <div class="h-mid">我的订单</div>
+          <div class="h-right">
+            <aside class="top_bar">
+              <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+      </header>
+       	
+<script type="text/javascript" src="__WX__js/mobile.js" ></script>
+<div class="goods_nav hid" id="menu">
+        <div class="Triangle">
+          <h2></h2>
+        </div>
+        <ul>
+          <li><a href="index.html"><span class="menu1"></span><i>首页</i></a></li>
+          <li><a href="catalog.html"><span class="menu2"></span><i>分类</i></a></li>
+          <li><a href="flow.html"><span class="menu3"></span><i>购物车</i></a></li>
+          <li style=" border:0;"><a href="index.html"><span class="menu4"></span><i>我的</i></a></li>
+        </ul>
+      </div> 
+     
+        
+<div id="wrapper">
+  <div id="viewport">
+  <div class="order_list">
+     
+             <div id="OrderList" class="ord_list">
+      
+       <h2><img src="images/dianpu.png">状态：<span>未确认,未付款,未发货</span></h2>
+       <h3>订单编号：2016030899022</h3>
+              <dl class="dingdan">
+       <dt><img src="testimg/82_thumb_G_1439019885065.jpg"></dt>
+       <dd><p>tune tune2015夏装印花骷髅头女T恤短袖拼接圆领修身棉上衣</p><span>￥59元&nbsp;x&nbsp;1</span></dd>
+       </dl>
+             
+        
+        <ul>
+         <li>总价<strong>：￥57.00元</strong> </li>
+         <li><a href="#" onclick="if (!confirm('您确认要取消该订单吗？取消后此订单将视为无效订单')) return false;">取消订单</a></li>
+        </ul>
+        
+        </div>
+         
+      
+<div style="background:#FFF;">
+<section class="list-pagination">
+    <div style="" class="pagenav-wrapper" id="J_PageNavWrap">
+      <div class="pagenav-content">
+        <div class="pagenav" id="J_PageNav">
+
+          <div class="p-prev p-gray" > <a href="">上一页</a> </div>
+          <div class="pagenav-cur" style="vertical-align:bottom">
+            <div class="pagenav-text" > <span>      1/1</span> <i></i> </div>
+      <select class="pagenav-select"  onchange="location.href=this.options[this.selectedIndex].value;">
+  <option selected="selected" value="user.php?act=order_list&page=1">第1页</option>
+  </select>
+            
+          </div>
+       <div class="p-next" > <a href="">下一页</a> </div>
+		</div>
+      </div>
+    </div>
+  </section>
+ 
+</div>
+</div>
+ 
+
+<script type="text/javascript">
+var from_order_empty = "请选择要合并的从订单";
+var to_order_empty = "请选择要合并的主订单";
+var order_same = "主订单和从订单相同，请重新选择";
+var confirm_merge = "您确实要合并这两个订单吗？";
+</script>
+
+      <include file="public:footer"/>
+
+
+  </div>
+</div>
+      <include file="public:wechat"/>
+</body>
+</html>

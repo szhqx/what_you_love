@@ -1,0 +1,12 @@
+<volist name="activity['root']" id="vo">
+<div class="huodong">
+  <a href="{:U('activity/show',array('id'=>$vo['activityId']),'')}"><div class="huodong_mid">
+      <div class="h_right">
+       <div class="img"><img src="__ROOT__/{$vo.picurl}">
+       <span><strong>活动主题：</strong>{$vo.activityTitle}</span>
+       </div>
+        </div>
+      </div>
+  </a>
+</div>
+</volist>
